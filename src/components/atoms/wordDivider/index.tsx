@@ -8,29 +8,30 @@ const Row = styled.div`
   justify-content: center;
   opacity: 0.5;
 `;
-const Line = styled.div`
+const Line = styled.div<{ color?: string }>`
   width: 80px;
   height: 1px;
-  background-color: #6b4e71;
+  background-color: ${(props) => (props.color ? props.color : "#6b4e71")};
 `;
 
-const Word = styled.div`
+const Word = styled.div<{ color?: string }>`
   font-family: "Playfair Display";
   font-size: 1rem;
-  color: #6b4e71;
+  color: ${(props) => (props.color ? props.color : "#6b4e71")};
   margin: 0 10px 0 10px;
 `;
 
 interface Props {
   children: string;
+  color?: string;
 }
 
 function WordDivider(props: Props) {
   return (
     <Row>
-      <Line></Line>
-      <Word>{props.children}</Word>
-      <Line></Line>
+      <Line color={props.color}></Line>
+      <Word color={props.color}>{props.children}</Word>
+      <Line color={props.color}></Line>
     </Row>
   );
 }

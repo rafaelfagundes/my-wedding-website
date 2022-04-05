@@ -11,7 +11,7 @@ const StyledHome = styled.div`
 
 const Background = styled.div`
   position: absolute;
-  width: calc(100vw - 15px);
+  width: 100vw;
   height: 540px;
   left: 0px;
   top: 0px;
@@ -97,7 +97,7 @@ function Home() {
       <FlowersC image="images/bl-flower.png"></FlowersC>
       <FlowersD image="images/br-flower.png"></FlowersD>
       <Couple image="images/couple.png"></Couple>
-      <VSpacer multiplier={12}></VSpacer>
+      <VSpacer multiplier={14}></VSpacer>
       <Title>Vão Casar</Title>
       <VSpacer multiplier={2}></VSpacer>
       <Center>
