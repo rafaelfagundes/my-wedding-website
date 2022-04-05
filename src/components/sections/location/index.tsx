@@ -1,4 +1,5 @@
 import React from "react";
+import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 import Center from "../../atoms/center";
 import { VSpacer } from "../../atoms/spacers";
@@ -7,11 +8,11 @@ import WordDivider from "../../atoms/wordDivider";
 
 const StyledLocation = styled.div`
   background-color: #e792a6;
-  padding: 80px 0 100px 0;
+  padding: ${isMobile ? "40px 0 50px 0" : "80px 0 100px 0"};
 `;
 
 const Container = styled.div`
-  width: 75vw;
+  width: ${isMobile ? 90 : 75}vw;
   max-width: 850px;
   background-color: white;
   filter: drop-shadow(0px 4px 20px rgba(0, 0, 0, 0.1));
@@ -30,7 +31,7 @@ const Picture = styled.div<{ image: string }>`
 `;
 
 const DataContainer = styled.div`
-  width: 60%;
+  width: ${isMobile ? 100 : 60}%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -45,6 +46,7 @@ const LittleFlower = styled.div<{ image: string }>`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  margin-left: -8px;
 `;
 
 const Names = styled.div``;
@@ -53,7 +55,7 @@ const Name = styled.div`
   font-family: "Playfair Display";
   font-style: normal;
   font-weight: 400;
-  font-size: 48.6733px;
+  font-size: ${isMobile ? 2.2 : 3.2}rem;
   line-height: 65px;
   text-align: center;
 `;
@@ -70,7 +72,7 @@ const Date = styled.div`
 const Address = styled.div`
   font-family: "Playfair Display";
   font-weight: 200;
-  font-size: 1rem;
+  font-size: ${isMobile ? 0.9 : 1}rem;
   letter-spacing: 0.085em;
   color: #6b4e71;
   text-align: center;
@@ -115,10 +117,10 @@ function Location() {
       <Center>
         <Title color="white">Local & Data</Title>
       </Center>
-      <VSpacer multiplier={5}></VSpacer>
+      <VSpacer multiplier={isMobile ? 2.5 : 5}></VSpacer>
       <Center>
         <Container>
-          <Picture image="/images/location.jpg"></Picture>
+          {!isMobile && <Picture image="/images/location.jpg"></Picture>}
           <DataContainer>
             <Center>
               <LittleFlower image="/images/little-flower.png"></LittleFlower>
@@ -126,14 +128,14 @@ function Location() {
             <VSpacer multiplier={2}></VSpacer>
             <Names>
               <Name>Elisa Margotte</Name>
-              <VSpacer multiplier={2}></VSpacer>
+              <VSpacer multiplier={isMobile ? 1 : 2}></VSpacer>
               <WordDivider>&</WordDivider>
-              <VSpacer multiplier={1}></VSpacer>
+              <VSpacer multiplier={isMobile ? 0.4 : 1}></VSpacer>
               <Name>Rafael Fagundes</Name>
             </Names>
-            <VSpacer multiplier={4}></VSpacer>
+            <VSpacer multiplier={isMobile ? 2 : 4}></VSpacer>
             <Date>21 de maio de 2022 às 13:00</Date>
-            <VSpacer multiplier={4}></VSpacer>
+            <VSpacer multiplier={isMobile ? 3 : 4}></VSpacer>
             <Address>POUSADA RECANTO DA ALEGRIA</Address>
             <Address>R. Gino Ovídio Della Croce, 223</Address>
             <Address>São João del Rei - MG</Address>

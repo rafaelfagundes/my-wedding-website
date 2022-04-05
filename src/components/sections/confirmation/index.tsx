@@ -1,4 +1,5 @@
 import React from "react";
+import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 import Center from "../../atoms/center";
 import Paragraph from "../../atoms/paragraph";
@@ -7,20 +8,21 @@ import Title from "../../atoms/title";
 import WordDivider from "../../atoms/wordDivider";
 
 const Background = styled.div<{ image: string }>`
-  padding: 40px 100px 100px 100px;
+  padding: ${isMobile ? "40px 0 50px 0" : "40px 100px 100px 100px"};
   background-image: url(${(props) => props.image});
   background-size: 100vw;
-  background-position: center;
+  background-position: ${isMobile ? "top" : "center"};
   background-repeat: no-repeat;
   width: 100vw;
 `;
 
 const Rings = styled.div<{ image: string; size: number }>`
   width: ${(props) => props.size}px;
-  height: ${(props) => props.size * 0.6687539936}px;
+  height: ${(props) => props.size * 0.75}px;
   background-image: url(${(props) => props.image});
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
 `;
 
 const Button = styled.div`
@@ -45,19 +47,24 @@ const ButtonText = styled.div`
 `;
 
 const Text = styled.div`
-  max-width: 600px;
+  max-width: 680px;
+  padding: 0 40px;
 `;
 
 function Confirmation() {
   return (
     <Background image="/images/confirmation-flower.jpg">
       <Center>
-        <Rings image="/images/rings.jpg" size={350}></Rings>
+        <Rings
+          image={isMobile ? "/images/rings3.png" : "/images/rings.jpg"}
+          size={isMobile ? 250 : 400}
+        ></Rings>
       </Center>
+      {isMobile && <VSpacer multiplier={1}></VSpacer>}
       <Title>Confirme Sua Presença</Title>
       <VSpacer multiplier={1}></VSpacer>
       <WordDivider>eu vou!</WordDivider>
-      <VSpacer multiplier={4}></VSpacer>
+      <VSpacer multiplier={isMobile ? 2 : 4}></VSpacer>
       <Center>
         <Text>
           <Paragraph center color="#6c176c">
@@ -67,7 +74,7 @@ function Confirmation() {
           </Paragraph>
         </Text>
       </Center>
-      <VSpacer multiplier={5}></VSpacer>
+      <VSpacer multiplier={isMobile ? 3 : 5}></VSpacer>
       <Center>
         <Button onClick={() => alert("ok")}>
           <ButtonText>Confirmar Presença</ButtonText>

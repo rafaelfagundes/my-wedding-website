@@ -1,33 +1,35 @@
 import React from "react";
+import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 import Center from "../../atoms/center";
 import { VSpacer } from "../../atoms/spacers";
 
 const StyledGift = styled.div`
   background-color: #fff;
-  width: 250px;
+  width: ${isMobile ? 320 : 250}px;
   height: 348px;
   border-radius: 10px;
-  margin-bottom: 40px;
+  margin-bottom: ${isMobile ? 20 : 40}px;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 10px;
   margin-right: 20px;
+  filter: drop-shadow(0px 4px 20px rgba(0, 0, 0, 0.1));
 `;
 
 const Picture = styled.div<{ image: string }>`
   background-image: url(${(props) => props.image});
   background-size: cover;
   background-position: center;
-  width: 210px;
-  height: 150px;
+  width: ${isMobile ? 290 : 210}px;
+  height: ${isMobile ? 290 * 0.5 : 210 * 0.7142857143}px;
 `;
 
 const Divider = styled.div`
   height: 1px;
-  width: 210px;
-  background-color: #e4e4e4;
+  width: ${isMobile ? 280 : 210}px;
+  background-color: #efefef;
 `;
 
 const Title = styled.div`
@@ -55,13 +57,13 @@ const ButtonsContainer = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: 210px;
+  width: ${isMobile ? 290 : 210}px;
 `;
 
 const Button = styled.div<{ color: string }>`
   background-color: ${(props) => props.color};
   border-radius: 10px;
-  width: 100px;
+  width: ${isMobile ? 140 : 100}px;
   height: 40px;
   display: flex;
   flex-direction: row;
@@ -82,6 +84,7 @@ const ButtonText = styled.div`
 function Gift() {
   return (
     <StyledGift>
+      <VSpacer multiplier={isMobile ? 1 : 0}></VSpacer>
       <Picture image="/images/tv.webp"></Picture>
       <VSpacer multiplier={2}></VSpacer>
       <Center>

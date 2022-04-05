@@ -1,4 +1,5 @@
 import React from "react";
+import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 import Center from "../../atoms/center";
 import Paragraph from "../../atoms/paragraph";
@@ -9,7 +10,7 @@ import Gift from "../../molecules/gift";
 
 const StyledGifts = styled.div`
   background: #d1b370;
-  padding: 80px 0 40px 0;
+  padding: ${isMobile ? "40px 0 20px 0" : "80px 0 40px 0"};
 `;
 
 const BackgroundImage = styled.div<{ image: string }>`
@@ -21,21 +22,17 @@ const BackgroundImage = styled.div<{ image: string }>`
 
 const Text = styled.div`
   max-width: 600px;
+  padding: 0 40px;
 `;
 
 const GiftsContainer = styled.div`
   display: flex;
   flex-flow: row wrap;
-  width: 75vw;
+  width: ${isMobile ? 90 : 75}vw;
   max-width: ${250 * 4 + 4 * 20}px;
   align-items: center;
   margin-right: -20px;
   justify-content: center;
-
-  /* &::after {
-    content: "";
-    flex: auto;
-  } */
 `;
 
 function Gifts() {
@@ -55,7 +52,7 @@ function Gifts() {
             </Paragraph>
           </Text>
         </Center>
-        <VSpacer multiplier={6}></VSpacer>
+        <VSpacer multiplier={isMobile ? 4 : 6}></VSpacer>
         <Center>
           <GiftsContainer>
             <Gift></Gift>

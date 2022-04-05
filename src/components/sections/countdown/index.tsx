@@ -1,5 +1,6 @@
 import React from "react";
 import ReactCountdown from "react-countdown";
+import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 import Center from "../../atoms/center";
 import { VSpacer } from "../../atoms/spacers";
@@ -9,7 +10,7 @@ const StyledCountdown = styled.div<{ image: string }>`
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  height: 300px;
+  height: ${isMobile ? 150 : 300}px;
 `;
 
 const Shade = styled.div`
@@ -19,11 +20,11 @@ const Shade = styled.div`
 const CountdownContainer = styled.div`
   display: flex;
   flex-direction: row;
-  min-width: 50%;
-  max-width: 60%;
+  min-width: ${isMobile ? 80 : 50}%;
+  max-width: ${isMobile ? 90 : 60}%;
   justify-content: space-between;
   align-items: center;
-  height: 300px;
+  height: ${isMobile ? 150 : 300}px;
 `;
 
 const StyledNumberAndDescription = styled.div`
@@ -36,8 +37,8 @@ const Value = styled.div`
   font-family: "Playfair Display";
   font-style: normal;
   font-weight: 400;
-  font-size: 56px;
-  line-height: 75px;
+  font-size: ${isMobile ? 3 : 4}rem;
+  line-height: ${isMobile ? 3 : 5}rem;
   text-align: center;
   color: #ffffff;
 `;
@@ -46,8 +47,8 @@ const Description = styled.div`
   font-family: "Playfair Display";
   font-style: italic;
   font-weight: 400;
-  font-size: 20px;
-  line-height: 27px;
+  font-size: ${isMobile ? 1 : 1.5}rem;
+  line-height: ${isMobile ? 1 : 1.5}rem;
   text-align: center;
   color: #ffffff;
 `;

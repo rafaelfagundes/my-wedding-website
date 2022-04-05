@@ -1,4 +1,5 @@
 import React from "react";
+import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 
 const Row = styled.div`
@@ -9,7 +10,7 @@ const Row = styled.div`
   opacity: 0.5;
 `;
 const Line = styled.div<{ color?: string }>`
-  width: 80px;
+  width: ${isMobile ? 60 : 80}px;
   height: 1px;
   background-color: ${(props) => (props.color ? props.color : "#6b4e71")};
 `;
