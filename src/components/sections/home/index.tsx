@@ -6,7 +6,7 @@ import { VSpacer } from "../../atoms/spacers";
 import Title from "../../atoms/title";
 
 const StyledHome = styled.div`
-  min-height: 1080px;
+  /* min-height: 1080px; */
 `;
 
 const Background = styled.div`
@@ -111,6 +111,7 @@ function Home() {
           </Paragraph>
         </Text>
       </Center>
+      <VSpacer multiplier={10}></VSpacer>
     </StyledHome>
   );
 }
