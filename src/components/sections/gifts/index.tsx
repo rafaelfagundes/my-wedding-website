@@ -12,6 +12,13 @@ const StyledGifts = styled.div`
   padding: 80px 0 40px 0;
 `;
 
+const BackgroundImage = styled.div<{ image: string }>`
+  background-image: url(${(props) => props.image});
+  background-size: contain;
+  background-position: top;
+  background-repeat: no-repeat;
+`;
+
 const Text = styled.div`
   max-width: 600px;
 `;
@@ -33,30 +40,32 @@ const GiftsContainer = styled.div`
 function Gifts() {
   return (
     <StyledGifts>
-      <Title color="#fff">Presentes</Title>
-      <VSpacer multiplier={1}></VSpacer>
-      <WordDivider color="#fff">simbólicos*</WordDivider>
-      <VSpacer multiplier={4}></VSpacer>
-      <Center>
-        <Text>
-          <Paragraph color="#fff" center>
-            Os noivos se mudarão de país, portanto não poderão levar seu amável
-            presente. Mas comprarão por lá o mesmo produto ou algo que lembre
-            você(s).
-          </Paragraph>
-        </Text>
-      </Center>
-      <VSpacer multiplier={6}></VSpacer>
-      <Center>
-        <GiftsContainer>
-          <Gift></Gift>
-          <Gift></Gift>
-          <Gift></Gift>
-          <Gift></Gift>
-          <Gift></Gift>
-          <Gift></Gift>
-        </GiftsContainer>
-      </Center>
+      <BackgroundImage image="/images/section.png">
+        <Title color="#fff">Presentes</Title>
+        <VSpacer multiplier={1}></VSpacer>
+        <WordDivider color="#fff">simbólicos*</WordDivider>
+        <VSpacer multiplier={4}></VSpacer>
+        <Center>
+          <Text>
+            <Paragraph color="#fff" center>
+              Os noivos se mudarão de país, portanto não poderão levar seu
+              amável presente. Mas comprarão por lá o mesmo produto ou algo que
+              lembre você(s).
+            </Paragraph>
+          </Text>
+        </Center>
+        <VSpacer multiplier={6}></VSpacer>
+        <Center>
+          <GiftsContainer>
+            <Gift></Gift>
+            <Gift></Gift>
+            <Gift></Gift>
+            <Gift></Gift>
+            <Gift></Gift>
+            <Gift></Gift>
+          </GiftsContainer>
+        </Center>
+      </BackgroundImage>
     </StyledGifts>
   );
 }
