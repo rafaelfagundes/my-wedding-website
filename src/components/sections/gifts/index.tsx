@@ -26,15 +26,16 @@ const Text = styled.div`
 const GiftsContainer = styled.div`
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-between;
   width: 75vw;
+  max-width: ${250 * 4 + 4 * 20}px;
   align-items: center;
   margin-right: -20px;
+  justify-content: center;
 
-  &::after {
+  /* &::after {
     content: "";
     flex: auto;
-  }
+  } */
 `;
 
 function Gifts() {
