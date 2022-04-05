@@ -67,8 +67,15 @@ function NumberAndDescription(props: NumberAndDescriptionProps) {
   );
 }
 
+interface CountdownProps {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
 function Countdown() {
-  const renderer = ({ days, hours, minutes, seconds }) => {
+  const renderer = ({ days, hours, minutes, seconds }: CountdownProps) => {
     return (
       <Shade>
         <Center>
