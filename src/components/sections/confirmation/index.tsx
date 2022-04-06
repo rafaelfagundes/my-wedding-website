@@ -38,7 +38,7 @@ const Button = styled.div`
 `;
 
 const ButtonText = styled.div`
-  font-family: "Oswald";
+  font-family: "Outfit";
   font-weight: 300;
   font-size: 1rem;
   line-height: 1.2rem;

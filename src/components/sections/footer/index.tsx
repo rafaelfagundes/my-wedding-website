@@ -31,7 +31,7 @@ const Credits = styled.div`
 `;
 
 const CreditsText = styled.div`
-  font-family: "Oswald";
+  font-family: "Outfit";
   font-style: normal;
   font-weight: 300;
   font-size: 0.8rem;

@@ -61,7 +61,7 @@ const Name = styled.div`
 `;
 
 const Date = styled.div`
-  font-family: "Oswald";
+  font-family: "Outfit";
   font-weight: 200;
   font-size: 1rem;
   letter-spacing: 0.085em;
@@ -101,7 +101,7 @@ const ButtonImage = styled.div<{ image: string }>`
 `;
 
 const ButtonText = styled.div`
-  font-family: "Oswald";
+  font-family: "Outfit";
   font-style: normal;
   font-weight: 400;
   font-size: 1.1rem;

@@ -14,8 +14,11 @@ const MainPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Elisa & Rafael</title>
-        <meta name="description" content="Elisa and Rafael Wedding's Website" />
+        <title>Elisa e Rafael</title>
+        <meta
+          name="description"
+          content="Website do Casamento da Elisa com o Rafael."
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Main>

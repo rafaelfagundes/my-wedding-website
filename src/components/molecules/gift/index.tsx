@@ -43,7 +43,7 @@ const Title = styled.div`
 `;
 
 const Price = styled.div`
-  font-family: "Oswald";
+  font-family: "Outfit";
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
@@ -72,7 +72,7 @@ const Button = styled.div<{ color: string }>`
 `;
 
 const ButtonText = styled.div`
-  font-family: "Oswald";
+  font-family: "Outfit";
   text-transform: uppercase;
   font-style: normal;
   font-weight: 300;
