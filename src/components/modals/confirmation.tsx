@@ -48,12 +48,16 @@ const CloseButtonText = styled.div`
   color: #ffffff;
 `;
 
-const Frame = styled.div`
+const Frame = styled.div<{ zoom: number }>`
   width: 600px;
   background-color: white;
   border-radius: 20px;
   padding: 0px 40px 60px 40px;
   box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.2);
+  z-index: 101;
+
+  transition: transform 0.4s ease-in-out;
+  transform: scale(${(props) => props.zoom});
 `;
 
 const SearchBar = styled.div`
@@ -117,7 +121,7 @@ const GuestName = styled.div`
   font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
 `;
 
-const ConfirmationButton = styled.div`
+const ActionButton = styled.div`
   width: 250px;
   height: 50px;
 
@@ -146,16 +150,11 @@ const Error = styled.div`
   font-style: normal;
   font-weight: 400;
   font-size: 1.2rem;
-  line-height: 1.2rem;
+  line-height: 1.6rem;
   text-align: center;
 
   color: #ef959d;
 `;
-
-interface Props {
-  toggleConfirmationModal: Dispatch<SetStateAction<boolean>>;
-  showModal: boolean;
-}
 
 function getNames(guest: Guest) {
   if (guest.numberOfGuests === 1) {
@@ -168,90 +167,134 @@ function getNames(guest: Guest) {
   }
 }
 
+interface Props {
+  toggleConfirmationModal: Dispatch<SetStateAction<boolean>>;
+  showModal: boolean;
+}
+
 function ConfirmationModal(props: Props) {
   const [data, setData] = useState(null);
   const [guestId, setGuestId] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
+  const [confirmed, setConfirmed] = useState(false);
 
   const getGuest = async () => {
     setLoading(true);
-    setError(false);
+    setError("");
     try {
       const response = await axios.get(`/api/confirmation?id=${guestId}`);
-      console.log("response", response);
       setData(response.data);
       setLoading(false);
     } catch (error) {
-      console.error(error);
       setLoading(false);
       setData(null);
-      setError(true);
+      setError("Convidado não encontrado. Verifique novamente o código.");
+    }
+  };
+
+  const confirm = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const response = await axios.post(`/api/confirmation`, {
+        id: guestId,
+      });
+      console.log("response", response.data);
+      setLoading(false);
+      setConfirmed(true);
+    } catch (error) {
+      setLoading(false);
+      setError(
+        "Oops! Não foi possível confirmar a sua presença. Tente novamente, ou confirme diretamente com os noivos."
+      );
     }
   };
 
   return (
     <Container>
-      <Frame>
+      <Frame zoom={props.showModal ? 1 : 0}>
         <CloseButton
           onClick={() => props.toggleConfirmationModal(!props.showModal)}
         >
           <CloseButtonText>X</CloseButtonText>
         </CloseButton>
-        <Title>Confirmar Presença</Title>
+        <Title>
+          {confirmed ? "Agradecemos Sua Presença" : "Confirmar Presença"}
+        </Title>
         <VSpacer multiplier={3}></VSpacer>
         <Center>
           <LittleFlower></LittleFlower>
         </Center>
         <VSpacer multiplier={3}></VSpacer>
-        <Paragraph color="#6C176C" center>
-          Para confirmar sua presença insira o código de convidado assim como
-          está no convite
-        </Paragraph>
-        <VSpacer multiplier={2}></VSpacer>
-        <Center>
-          <SearchBar>
-            <GuestIDInput
-              onChange={(e) => setGuestId(e.target.value)}
-              value={guestId}
-            ></GuestIDInput>
-            <SearchButton onClick={() => getGuest()}>
-              <SearchButtonText>Buscar</SearchButtonText>
-            </SearchButton>
-          </SearchBar>
-        </Center>
-        {loading && (
+        {confirmed && (
           <>
-            <VSpacer multiplier={2.5}></VSpacer>
+            <Paragraph color="#6C176C" center>
+              Oba! Adoramos saber da sua confirmação. Aguardamos você nesta data
+              tão especial!
+            </Paragraph>
+            <VSpacer multiplier={5}></VSpacer>
             <Center>
-              <Loading size={60}></Loading>
+              <ActionButton
+                onClick={() => props.toggleConfirmationModal(!props.showModal)}
+              >
+                <ButtonText>Fechar</ButtonText>
+              </ActionButton>
             </Center>
           </>
         )}
-        {error && (
-          <>
-            <VSpacer multiplier={2}></VSpacer>
-            <Center>
-              <Error>
-                Convidado não encontrado. Verifique novamente o código.
-              </Error>
-            </Center>
-          </>
+        {!confirmed && (
+          <Paragraph color="#6C176C" center>
+            Para confirmar sua presença insira o código de convidado assim como
+            está no convite
+          </Paragraph>
         )}
-        {data && (
+        {!confirmed && (
           <>
-            <VSpacer multiplier={3}></VSpacer>
-            <WordDivider>Resultados</WordDivider>
             <VSpacer multiplier={2}></VSpacer>
             <Center>
-              <GuestName>{getNames(data)}</GuestName>
+              <SearchBar>
+                <GuestIDInput
+                  onChange={(e) => setGuestId(e.target.value)}
+                  value={guestId}
+                ></GuestIDInput>
+                <SearchButton onClick={() => getGuest()}>
+                  <SearchButtonText>Buscar</SearchButtonText>
+                </SearchButton>
+              </SearchBar>
             </Center>
-            <VSpacer multiplier={3}></VSpacer>
-            <Center>
-              <ConfirmationButton>
-                <ButtonText>Confirmar Presença</ButtonText>
-              </ConfirmationButton>
-            </Center>
+            {loading && (
+              <>
+                <VSpacer multiplier={2.5}></VSpacer>
+                <Center>
+                  <Loading size={60}></Loading>
+                </Center>
+              </>
+            )}
+            {error && (
+              <>
+                <VSpacer multiplier={2}></VSpacer>
+                <Center>
+                  <Error>{error}</Error>
+                </Center>
+              </>
+            )}
+            {data && !error && !loading && (
+              <>
+                <VSpacer multiplier={3}></VSpacer>
+                <WordDivider>Resultados</WordDivider>
+                <VSpacer multiplier={2}></VSpacer>
+                <Center>
+                  <GuestName>{getNames(data)}</GuestName>
+                </Center>
+                <VSpacer multiplier={3}></VSpacer>
+                <Center>
+                  <ActionButton onClick={() => confirm()}>
+                    <ButtonText>Confirmar Presença</ButtonText>
+                  </ActionButton>
+                </Center>
+              </>
+            )}
           </>
         )}
       </Frame>

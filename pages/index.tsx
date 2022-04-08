@@ -12,7 +12,7 @@ import Location from "../src/components/sections/location";
 
 const Main = styled.div``;
 
-const BackgroundBlur = styled.div`
+const BackgroundBlur = styled.div<{ showConfirmationModal: boolean }>`
   background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(20px);
   width: 100vw;
@@ -20,12 +20,15 @@ const BackgroundBlur = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 99;
+  z-index: ${(props) => (props.showConfirmationModal ? 99 : -99)};
   overflow: hidden;
+
+  transition: opacity 0.4s ease-in-out;
+  opacity: ${(props) => (props.showConfirmationModal ? 1 : 0)};
 `;
 
 const MainPage: NextPage = () => {
-  const [showConfirmationModal, setshowConfirmationModal] = useState(false);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   return (
     <>
       <Head>
@@ -45,7 +48,7 @@ const MainPage: NextPage = () => {
         )}
         <Confirmation
           toggleConfirmationModal={() =>
-            setshowConfirmationModal(!showConfirmationModal)
+            setShowConfirmationModal(!showConfirmationModal)
           }
           showModal={showConfirmationModal}
         ></Confirmation>
@@ -56,17 +59,20 @@ const MainPage: NextPage = () => {
             <Footer></Footer>
           </>
         )}
-        {showConfirmationModal && (
-          <>
-            <BackgroundBlur></BackgroundBlur>
-            <ConfirmationModal
-              toggleConfirmationModal={() =>
-                setshowConfirmationModal(!showConfirmationModal)
-              }
-              showModal={showConfirmationModal}
-            ></ConfirmationModal>
-          </>
-        )}
+
+        <>
+          <BackgroundBlur
+            onClick={() => setShowConfirmationModal(!showConfirmationModal)}
+            showConfirmationModal={showConfirmationModal}
+          ></BackgroundBlur>
+
+          <ConfirmationModal
+            toggleConfirmationModal={() =>
+              setShowConfirmationModal(!showConfirmationModal)
+            }
+            showModal={showConfirmationModal}
+          ></ConfirmationModal>
+        </>
       </Main>
     </>
   );

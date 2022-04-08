@@ -20,6 +20,7 @@ const StyledTitle = styled.div<{ color?: string }>`
   font-style: normal;
   font-weight: 500;
   font-size: ${isMobile ? 2 : 3.5}rem;
+  line-height: ${isMobile ? 3 : 4.2}rem;
   letter-spacing: -0.035em;
   text-align: center;
   margin: 0;
