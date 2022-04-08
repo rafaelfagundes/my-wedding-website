@@ -40,6 +40,8 @@ const Title = styled.div`
   line-height: 29px;
   text-align: center;
   color: #6c176c;
+  font-feature-settings: "dlig", "liga", "calt";
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
 `;
 
 const Price = styled.div`

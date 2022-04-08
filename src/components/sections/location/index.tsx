@@ -2,6 +2,7 @@ import React from "react";
 import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 import Center from "../../atoms/center";
+import LittleFlower from "../../atoms/littleFlower";
 import { VSpacer } from "../../atoms/spacers";
 import Title from "../../atoms/title";
 import WordDivider from "../../atoms/wordDivider";
@@ -39,16 +40,6 @@ const DataContainer = styled.div`
   padding: 50px 0 50px 0;
 `;
 
-const LittleFlower = styled.div<{ image: string }>`
-  width: 32px;
-  height: 24px;
-  background-image: url(${(props) => props.image});
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  margin-left: -8px;
-`;
-
 const Names = styled.div``;
 
 const Name = styled.div`
@@ -58,6 +49,8 @@ const Name = styled.div`
   font-size: ${isMobile ? 2.2 : 3.2}rem;
   line-height: 65px;
   text-align: center;
+  font-feature-settings: "dlig", "liga", "calt";
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
 `;
 
 const Date = styled.div`
@@ -76,6 +69,8 @@ const Address = styled.div`
   letter-spacing: 0.085em;
   color: #6b4e71;
   text-align: center;
+  font-feature-settings: "dlig", "liga", "calt";
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
 `;
 
 const Button = styled.button`
@@ -123,7 +118,7 @@ function Location() {
           {!isMobile && <Picture image="/images/location.jpg"></Picture>}
           <DataContainer>
             <Center>
-              <LittleFlower image="/images/little-flower.png"></LittleFlower>
+              <LittleFlower></LittleFlower>
             </Center>
             <VSpacer multiplier={2}></VSpacer>
             <Names>

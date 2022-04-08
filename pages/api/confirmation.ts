@@ -46,7 +46,6 @@ async function search(id: string, showInternalId: boolean) {
 async function confirmInvitation(id: string) {
   const guest = await search(id, true);
   if (guest) {
-    console.log(guest);
     const confirmation: GuestConfirmation = {
       numberOfGuests: guest.numberOfGuests,
       alreadyConfirmed: false,
@@ -64,8 +63,11 @@ async function confirmInvitation(id: string) {
           },
         },
       ]);
-      console.log(response);
-      return confirmation;
+      if (response) {
+        return confirmation;
+      } else {
+        return null;
+      }
     }
   } else {
     return null;

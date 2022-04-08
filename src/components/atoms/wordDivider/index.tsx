@@ -20,6 +20,8 @@ const Word = styled.div<{ color?: string }>`
   font-size: 1rem;
   color: ${(props) => (props.color ? props.color : "#6b4e71")};
   margin: 0 10px 0 10px;
+  font-feature-settings: "dlig", "liga", "calt";
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
 `;
 
 interface Props {

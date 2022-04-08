@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 import Center from "../../atoms/center";
@@ -26,7 +26,7 @@ const Rings = styled.div<{ image: string; size: number }>`
 `;
 
 const Button = styled.div`
-  width: 205px;
+  width: 235px;
   height: 50px;
   background: #6c176c;
   border-radius: 10px;
@@ -51,7 +51,12 @@ const Text = styled.div`
   padding: 0 40px;
 `;
 
-function Confirmation() {
+interface Props {
+  toggleConfirmationModal: Dispatch<SetStateAction<boolean>>;
+  showModal: boolean;
+}
+
+function Confirmation(props: Props) {
   return (
     <Background image="/images/confirmation-flower.jpg">
       <Center>
@@ -76,7 +81,7 @@ function Confirmation() {
       </Center>
       <VSpacer multiplier={isMobile ? 3 : 5}></VSpacer>
       <Center>
-        <Button onClick={() => alert("ok")}>
+        <Button onClick={() => props.toggleConfirmationModal(!props.showModal)}>
           <ButtonText>Confirmar Presença</ButtonText>
         </Button>
       </Center>

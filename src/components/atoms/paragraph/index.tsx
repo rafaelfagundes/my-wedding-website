@@ -10,6 +10,8 @@ const StyledParagraph = styled.div<{ center?: boolean; color?: string }>`
   line-height: ${isMobile ? 2 : 2.5}rem;
   text-align: ${(props) => (props.center ? "center" : "undefined")};
   color: ${(props) => (props.color ? props.color : "#1f9292")};
+  font-feature-settings: "dlig", "liga", "calt";
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
 `;
 
 interface Props {

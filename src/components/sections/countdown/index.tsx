@@ -41,6 +41,8 @@ const Value = styled.div`
   line-height: ${isMobile ? 3 : 5}rem;
   text-align: center;
   color: #ffffff;
+  font-feature-settings: "dlig", "liga", "calt";
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
 `;
 
 const Description = styled.div`
@@ -51,6 +53,8 @@ const Description = styled.div`
   line-height: ${isMobile ? 1 : 1.5}rem;
   text-align: center;
   color: #ffffff;
+  font-feature-settings: "dlig", "liga", "calt";
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
 `;
 
 interface NumberAndDescriptionProps {

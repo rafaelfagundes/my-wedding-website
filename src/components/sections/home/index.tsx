@@ -27,6 +27,8 @@ const HeaderTitle = styled.div`
   position: relative;
   text-align: center;
   max-width: ${isMobile ? "155px" : undefined};
+  font-feature-settings: "dlig", "liga", "calt";
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
 `;
 
 const Flowers = styled.div<{ image: string }>`
