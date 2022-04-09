@@ -9,6 +9,11 @@ import WordDivider from "../../atoms/wordDivider";
 
 const StyledLocation = styled.div`
   background-color: #e792a6;
+  background: linear-gradient(
+    299.82deg,
+    #e792a6 0%,
+    rgba(231, 146, 166, 0.8) 100%
+  );
   padding: ${isMobile ? "40px 0 50px 0" : "80px 0 100px 0"};
 `;
 
@@ -47,16 +52,21 @@ const Name = styled.div`
   font-style: normal;
   font-weight: 400;
   font-size: ${isMobile ? 2.2 : 3.2}rem;
-  line-height: 65px;
+  line-height: ${isMobile ? 2.8 : 3.8}rem;
   text-align: center;
   font-feature-settings: "dlig", "liga", "calt";
   font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
+  background: linear-gradient(90.71deg, #be667b 0.24%, #6c176c 101.15%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 `;
 
 const Date = styled.div`
   font-family: "Outfit";
   font-weight: 200;
   font-size: 1rem;
+  line-height: 1rem;
   letter-spacing: 0.085em;
   text-transform: uppercase;
   color: #6b4e71;
@@ -66,11 +76,23 @@ const Address = styled.div`
   font-family: "Playfair Display";
   font-weight: 200;
   font-size: ${isMobile ? 0.9 : 1}rem;
-  letter-spacing: 0.085em;
+  /* letter-spacing: 0.085em; */
   color: #6b4e71;
   text-align: center;
   font-feature-settings: "dlig", "liga", "calt";
   font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
+`;
+
+const MainAddress = styled.div`
+  font-family: "Outfit";
+  font-weight: 500;
+  font-size: ${isMobile ? 0.9 : 1}rem;
+  letter-spacing: 0.085em;
+  color: #ef959d;
+  text-align: center;
+  font-feature-settings: "dlig", "liga", "calt";
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
+  margin-bottom: 5px;
 `;
 
 const Button = styled.button`
@@ -82,7 +104,7 @@ const Button = styled.button`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 5px 20px 5px 20px;
+  padding: 10px 20px 10px 20px;
 `;
 
 const ButtonImage = styled.div<{ image: string }>`
@@ -128,10 +150,10 @@ function Location() {
               <VSpacer multiplier={isMobile ? 0.4 : 1}></VSpacer>
               <Name>Rafael Fagundes</Name>
             </Names>
-            <VSpacer multiplier={isMobile ? 2 : 4}></VSpacer>
+            <VSpacer multiplier={isMobile ? 3 : 4}></VSpacer>
             <Date>21 de maio de 2022 às 13:00</Date>
             <VSpacer multiplier={isMobile ? 3 : 4}></VSpacer>
-            <Address>POUSADA RECANTO DA ALEGRIA</Address>
+            <MainAddress>POUSADA RECANTO DA ALEGRIA</MainAddress>
             <Address>R. Gino Ovídio Della Croce, 223</Address>
             <Address>São João del Rei - MG</Address>
             <VSpacer multiplier={4}></VSpacer>

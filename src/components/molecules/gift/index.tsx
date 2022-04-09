@@ -1,29 +1,31 @@
 import React from "react";
 import { isMobile } from "react-device-detect";
 import styled from "styled-components";
+import Product from "../../../definitions/product";
 import Center from "../../atoms/center";
 import { VSpacer } from "../../atoms/spacers";
 
 const StyledGift = styled.div`
   background-color: #fff;
-  width: ${isMobile ? 320 : 250}px;
-  height: 348px;
+  width: ${isMobile ? "90%" : "250px"};
   border-radius: 10px;
   margin-bottom: ${isMobile ? 20 : 40}px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 10px;
+  padding: 10px 20px 15px 20px;
   margin-right: 20px;
   filter: drop-shadow(0px 4px 20px rgba(0, 0, 0, 0.1));
 `;
 
 const Picture = styled.div<{ image: string }>`
   background-image: url(${(props) => props.image});
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
   background-position: center;
-  width: ${isMobile ? 290 : 210}px;
-  height: ${isMobile ? 290 * 0.5 : 210 * 0.7142857143}px;
+  width: ${isMobile ? "90%" : "210px"};
+  /* height: ${isMobile ? 290 * 0.5 : 210 * 0.7142857143}px; */
+  height: ${isMobile ? 250 : 210}px;
 `;
 
 const Divider = styled.div`
@@ -36,8 +38,8 @@ const Title = styled.div`
   font-family: "Playfair Display";
   font-style: normal;
   font-weight: 500;
-  font-size: 22px;
-  line-height: 29px;
+  font-size: ${isMobile ? 1.2 : 1}rem;
+  line-height: ${isMobile ? 1.6 : 1}rem;
   text-align: center;
   color: #6c176c;
   font-feature-settings: "dlig", "liga", "calt";
@@ -83,19 +85,28 @@ const ButtonText = styled.div`
   color: #ffffff;
 `;
 
-function Gift() {
+interface Props {
+  product: Product;
+}
+
+function Gift({ product }: Props) {
   return (
     <StyledGift>
       <VSpacer multiplier={isMobile ? 1 : 0}></VSpacer>
-      <Picture image="/images/tv.webp"></Picture>
+      <Picture image={product.image}></Picture>
       <VSpacer multiplier={2}></VSpacer>
       <Center>
         <Divider></Divider>
       </Center>
       <VSpacer multiplier={2}></VSpacer>
-      <Title>Televisão 8K LG</Title>
+      <Title>{product.name}</Title>
       <VSpacer multiplier={1}></VSpacer>
-      <Price>R$ 10.500,00</Price>
+      <Price>
+        {new Intl.NumberFormat("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        }).format(product.value)}
+      </Price>
       <VSpacer multiplier={2}></VSpacer>
       <Center>
         <ButtonsContainer>

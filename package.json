@@ -17,7 +17,8 @@
     "react-device-detect": "^2.1.2",
     "react-dom": "18.0.0",
     "short-unique-id": "^4.4.4",
-    "styled-components": "^5.3.5"
+    "styled-components": "^5.3.5",
+    "swr": "^1.2.2"
   },
   "devDependencies": {
     "@types/node": "17.0.23",

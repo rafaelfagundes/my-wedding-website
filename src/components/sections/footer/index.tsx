@@ -5,23 +5,6 @@ const StyledFooter = styled.div`
   width: 100vw;
 `;
 
-const FlowerContainer = styled.div<{ size: number }>`
-  background: #d1b370;
-  height: ${(props) => props.size * 0.32}px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Flower = styled.div<{ image: string; size: number }>`
-  background-image: url(${(props) => props.image});
-  background-size: cover;
-  background-position: center;
-  width: ${(props) => props.size}px;
-  height: ${(props) => props.size * 0.32}px;
-`;
-
 const Credits = styled.div`
   display: flex;
   background-color: #3f3f3f;
@@ -46,9 +29,6 @@ const SIZE = 250;
 function Footer() {
   return (
     <StyledFooter>
-      <FlowerContainer size={SIZE}>
-        <Flower image="/images/ft-flower.png" size={SIZE}></Flower>
-      </FlowerContainer>
       <Credits>
         <CreditsText>Desenvolvido por Rafael Fagundes - 2022</CreditsText>
       </Credits>

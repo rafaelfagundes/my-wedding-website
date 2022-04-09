@@ -16,14 +16,20 @@ const Background = styled.div`
   top: 0px;
 
   background-color: #29b9b9;
+  background: linear-gradient(
+    100.09deg,
+    rgba(41, 185, 185, 0.8) 0%,
+    #29b9b9 100%
+  );
   z-index: -10;
 `;
 
 const HeaderTitle = styled.div`
   font-family: "Playfair Display";
   font-size: ${isMobile ? 3 : 7}rem;
+  line-height: ${isMobile ? 3 : 7}rem;
   color: #ffffff;
-  top: ${isMobile ? 110 : 140}px;
+  top: ${isMobile ? 130 : 180}px;
   position: relative;
   text-align: center;
   max-width: ${isMobile ? "155px" : undefined};
@@ -88,7 +94,7 @@ const Couple = styled.div<{ image: string }>`
   background-repeat: no-repeat;
   left: ${isMobile ? `calc(50% - 130px)` : `calc(50% - 200px)`};
   position: relative;
-  top: 112px;
+  top: ${isMobile ? 144 : 148}px;
 `;
 
 const Text = styled.div`
@@ -112,7 +118,7 @@ function Home() {
         </>
       )}
       <Couple image="images/couple.png"></Couple>
-      <VSpacer multiplier={14}></VSpacer>
+      <VSpacer multiplier={isMobile ? 16 : 16}></VSpacer>
       <Title>Vão Casar</Title>
       <VSpacer multiplier={2}></VSpacer>
       <Center>
@@ -130,7 +136,7 @@ function Home() {
       <Center>
         <EndFlower image="/images/divider-flower.jpg"></EndFlower>
       </Center>
-      <VSpacer multiplier={isMobile ? 4 : 9}></VSpacer>
+      <VSpacer multiplier={isMobile ? 4 : 7}></VSpacer>
     </StyledHome>
   );
 }
