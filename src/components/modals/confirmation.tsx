@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { Dispatch, SetStateAction, useState } from "react";
+import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 import Guest from "../../definitions/guest";
 import Center from "../atoms/center";
@@ -38,6 +39,12 @@ const CloseButton = styled.div`
   left: -55px;
 `;
 
+const MobileCloseButton = styled(CloseButton)`
+  position: relative;
+  top: 70px;
+  left: 0px;
+`;
+
 const CloseButtonText = styled.div`
   font-family: "Outfit";
   font-style: normal;
@@ -49,10 +56,10 @@ const CloseButtonText = styled.div`
 `;
 
 const Frame = styled.div<{ zoom: number }>`
-  width: 600px;
+  width: ${isMobile ? "90%" : "600px"};
   background-color: white;
   border-radius: 20px;
-  padding: 0px 40px 60px 40px;
+  padding: ${isMobile ? "0px 20px 10px 20px" : "0px 40px 60px 40px"};
   box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.2);
   z-index: 101;
 
@@ -71,7 +78,7 @@ const GuestIDInput = styled.input`
   border: 3px solid #85cab4;
   box-sizing: border-box;
   border-radius: 10px 0px 0px 10px;
-  width: 218px;
+  width: ${isMobile ? 180 : 218}px;
   height: 50px;
 
   font-family: "Outfit";
@@ -214,11 +221,14 @@ function ConfirmationModal(props: Props) {
   return (
     <Container>
       <Frame zoom={props.showModal ? 1 : 0}>
-        <CloseButton
-          onClick={() => props.toggleConfirmationModal(!props.showModal)}
-        >
-          <CloseButtonText>X</CloseButtonText>
-        </CloseButton>
+        {!isMobile && (
+          <CloseButton
+            onClick={() => props.toggleConfirmationModal(!props.showModal)}
+          >
+            <CloseButtonText>X</CloseButtonText>
+          </CloseButton>
+        )}
+        {isMobile && <VSpacer multiplier={4}></VSpacer>}
         <Title>
           {confirmed ? "Agradecemos Sua Presença" : "Confirmar Presença"}
         </Title>
@@ -245,8 +255,9 @@ function ConfirmationModal(props: Props) {
         )}
         {!confirmed && (
           <Paragraph color="#6C176C" center>
-            Para confirmar sua presença insira o código de convidado assim como
-            está no convite
+            {isMobile
+              ? "Insira o código de convidado assim como está no final do convite"
+              : "Para confirmar sua presença insira o código de convidado assim como está no convite"}
           </Paragraph>
         )}
         {!confirmed && (
@@ -296,6 +307,15 @@ function ConfirmationModal(props: Props) {
               </>
             )}
           </>
+        )}
+        {isMobile && (
+          <Center>
+            <MobileCloseButton
+              onClick={() => props.toggleConfirmationModal(!props.showModal)}
+            >
+              <CloseButtonText>X</CloseButtonText>
+            </MobileCloseButton>
+          </Center>
         )}
       </Frame>
     </Container>

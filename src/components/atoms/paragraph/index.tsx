@@ -7,7 +7,7 @@ const StyledParagraph = styled.div<{ center?: boolean; color?: string }>`
   font-style: normal;
   font-weight: 500;
   font-size: ${isMobile ? 1 : 1.5}rem;
-  line-height: ${isMobile ? 2 : 2.5}rem;
+  line-height: ${isMobile ? 1.6 : 2.5}rem;
   text-align: ${(props) => (props.center ? "center" : "undefined")};
   color: ${(props) => (props.color ? props.color : "#1f9292")};
   font-feature-settings: "dlig", "liga", "calt";
@@ -18,6 +18,7 @@ interface Props {
   children: string;
   center?: boolean;
   color?: string;
+  size?: number;
 }
 
 function Paragraph(props: Props) {
