@@ -18,7 +18,7 @@ const Background = styled.div`
   background-color: #29b9b9;
   background: linear-gradient(
     100.09deg,
-    rgba(41, 185, 185, 0.8) 0%,
+    rgba(41, 185, 185, 0.7) 0%,
     #29b9b9 100%
   );
   z-index: -10;

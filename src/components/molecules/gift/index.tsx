@@ -10,6 +10,7 @@ const StyledGift = styled.div`
   width: ${isMobile ? "90%" : "250px"};
   border-radius: 10px;
   margin-bottom: ${isMobile ? 20 : 40}px;
+  min-height: ${isMobile ? undefined : "430px"};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,16 +35,29 @@ const Divider = styled.div`
   background-color: #efefef;
 `;
 
+const TitleContainer = styled.div`
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: yellow; */
+`;
+
 const Title = styled.div`
   font-family: "Playfair Display";
   font-style: normal;
   font-weight: 500;
   font-size: ${isMobile ? 1.2 : 1}rem;
-  line-height: ${isMobile ? 1.6 : 1}rem;
+  line-height: ${isMobile ? 1.6 : 1.2}rem;
   text-align: center;
   color: #6c176c;
   font-feature-settings: "dlig", "liga", "calt";
   font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
+
+  /* text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; */
 `;
 
 const Price = styled.div`
@@ -99,7 +113,9 @@ function Gift({ product }: Props) {
         <Divider></Divider>
       </Center>
       <VSpacer multiplier={2}></VSpacer>
-      <Title>{product.name}</Title>
+      <TitleContainer>
+        <Title>{product.name}</Title>
+      </TitleContainer>
       <VSpacer multiplier={1}></VSpacer>
       <Price>
         {new Intl.NumberFormat("pt-BR", {

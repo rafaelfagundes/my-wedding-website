@@ -8,6 +8,11 @@ const StyledFooter = styled.div`
 const Credits = styled.div`
   display: flex;
   background-color: #3f3f3f;
+  background: linear-gradient(
+    271.06deg,
+    #3f3f3f 0%,
+    rgba(63, 63, 63, 0.9) 100%
+  );
   justify-content: center;
   align-items: center;
   height: 50px;
@@ -23,8 +28,6 @@ const CreditsText = styled.div`
   letter-spacing: 0.035em;
   color: #ffffff;
 `;
-
-const SIZE = 250;
 
 function Footer() {
   return (

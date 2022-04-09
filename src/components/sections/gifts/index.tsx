@@ -11,13 +11,14 @@ import Title from "../../atoms/title";
 import WordDivider from "../../atoms/wordDivider";
 import Gift from "../../molecules/gift";
 
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
+const fetcher = (arg: any, ...args: any[]) =>
+  fetch(arg, ...args).then((res) => res.json());
 
 const StyledGifts = styled.div`
   background: #d1b370;
   background: linear-gradient(
     117.78deg,
-    rgba(209, 179, 112, 0.8) 0%,
+    rgba(209, 179, 112, 0.75) 0%,
     #d1b370 100%
   );
   padding: ${isMobile ? "40px 0 0 0" : "80px 0 0 0"};
