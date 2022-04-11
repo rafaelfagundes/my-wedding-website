@@ -12,6 +12,7 @@
     "airtable": "^0.11.3",
     "axios": "^0.26.1",
     "next": "12.1.4",
+    "qrcode-pix": "4.0.1",
     "react": "^18.1.0-next-af730436c-20220405",
     "react-countdown": "^2.3.2",
     "react-device-detect": "^2.1.2",

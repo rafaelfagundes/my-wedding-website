@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import ConfirmationModal from "../src/components/modals/confirmation";
 import Confirmation from "../src/components/sections/confirmation";
@@ -12,23 +12,101 @@ import Location from "../src/components/sections/location";
 
 const Main = styled.div``;
 
-const BackgroundBlur = styled.div<{ showConfirmationModal: boolean }>`
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(20px);
+const BackgroundBlur = styled.div<{
+  showModal: boolean;
+  height: number;
+  bringToFront: boolean;
+}>`
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(80px);
+  width: 100vw;
+  height: ${(props) => props.height}px;
+  transition: opacity 0.4s ease-in-out;
+  opacity: ${(props) => (props.showModal ? 1 : 0)};
+  overflow: hidden;
+  position: absolute;
+  z-index: ${(props) => (props.bringToFront ? 98 : -100)};
+`;
+
+type ModalContainerProps = {
+  currentPosition: number;
+  showModal: boolean;
+};
+
+/*
+  This component declaration is to avoid creating a new component
+  each time the user scrolls the page. The property or properties
+  that changes a lot should be placed inside 'style' as shown below. 
+*/
+const ModalContainer = styled.div.attrs(
+  ({ currentPosition, showModal }: ModalContainerProps) => ({
+    style: {
+      top: currentPosition,
+      zIndex: showModal ? 99 : -99,
+    },
+  })
+)<ModalContainerProps>`
   width: 100vw;
   height: 100vh;
   position: absolute;
-  top: 0;
   left: 0;
-  z-index: ${(props) => (props.showConfirmationModal ? 99 : -99)};
   overflow: hidden;
-
-  transition: opacity 0.4s ease-in-out;
-  opacity: ${(props) => (props.showConfirmationModal ? 1 : 0)};
+  transition: position 1s ease-in-out;
 `;
 
 const MainPage: NextPage = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [bringToFront, setBringToFront] = useState(false);
+  const [height, setHeight] = useState(2000);
+  const [currentPosition, setCurrentPosition] = useState(0);
+
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [showGiftModal, setShowGiftModal] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("pix");
+
+  const toogleConfirmationModal = () => {
+    setCurrentPosition(document.documentElement.scrollTop);
+    setShowConfirmationModal(!showConfirmationModal);
+  };
+
+  const toogleGiftModal = (paymentMethod: string) => {
+    if (!showGiftModal) {
+      setCurrentPosition(document.documentElement.scrollTop);
+      setPaymentMethod(paymentMethod);
+    }
+    setShowGiftModal(!showGiftModal);
+  };
+
+  useEffect(() => {
+    if (showConfirmationModal || showGiftModal) {
+      setShowModal(true);
+      setHeight(document.documentElement.scrollHeight);
+      setBringToFront(true);
+    } else {
+      setShowModal(false);
+      setTimeout(() => {
+        /* The background blur should hide after 400ms
+           because it have to wait until the opacity animation ends.
+           Otherwise, the animation is not shown to user as it
+           occurs behind the main page.
+        */
+        setBringToFront(false);
+      }, 400);
+    }
+  }, [showConfirmationModal, showGiftModal]);
+
+  useEffect(() => {
+    window.onscroll = () => {
+      if (showConfirmationModal) {
+        setCurrentPosition(document.documentElement.scrollTop);
+      }
+    };
+
+    return () => {
+      window.onscroll = null;
+    };
+  });
+
   return (
     <>
       <Head>
@@ -40,39 +118,30 @@ const MainPage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Main>
-        {!showConfirmationModal && (
-          <>
-            <Home></Home>
-            <Location></Location>
-          </>
-        )}
+        <BackgroundBlur
+          showModal={showModal}
+          height={height}
+          bringToFront={bringToFront}
+        ></BackgroundBlur>
+        <Home></Home>
+        <Location></Location>
         <Confirmation
-          toggleConfirmationModal={() =>
-            setShowConfirmationModal(!showConfirmationModal)
-          }
+          toggleConfirmationModal={toogleConfirmationModal}
           showModal={showConfirmationModal}
         ></Confirmation>
-        {!showConfirmationModal && (
-          <>
-            <Countdown></Countdown>
-            <Gifts></Gifts>
-            <Footer></Footer>
-          </>
-        )}
+        <Countdown></Countdown>
+        <Gifts
+          toggleGiftModal={toogleGiftModal}
+          showModal={showGiftModal}
+        ></Gifts>
 
-        <>
-          <BackgroundBlur
-            onClick={() => setShowConfirmationModal(!showConfirmationModal)}
-            showConfirmationModal={showConfirmationModal}
-          ></BackgroundBlur>
-
+        <Footer></Footer>
+        <ModalContainer currentPosition={currentPosition} showModal={showModal}>
           <ConfirmationModal
-            toggleConfirmationModal={() =>
-              setShowConfirmationModal(!showConfirmationModal)
-            }
+            toggleConfirmationModal={toogleConfirmationModal}
             showModal={showConfirmationModal}
           ></ConfirmationModal>
-        </>
+        </ModalContainer>
       </Main>
     </>
   );

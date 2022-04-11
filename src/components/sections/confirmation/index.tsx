@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 import Center from "../../atoms/center";
@@ -52,7 +52,7 @@ const Text = styled.div`
 `;
 
 interface Props {
-  toggleConfirmationModal: Dispatch<SetStateAction<boolean>>;
+  toggleConfirmationModal: () => void;
   showModal: boolean;
 }
 

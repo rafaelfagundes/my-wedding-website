@@ -64,15 +64,20 @@ const Flower = styled.div<{ image: string; size: number }>`
   height: ${(props) => props.size * 0.32}px;
 `;
 
-function Gifts() {
+type GiftsProps = {
+  toggleGiftModal: (paymentMethod: string) => void;
+  showModal: boolean;
+};
+
+function Gifts(props: GiftsProps) {
   const { data, error } = useSWR("/api/gifts", fetcher, {
     refreshInterval: 10000,
     refreshWhenHidden: true,
     revalidateOnFocus: true,
   });
 
-  if (data) {
-    console.log(data);
+  if (error) {
+    console.error(error);
   }
 
   return (
