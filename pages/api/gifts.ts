@@ -25,6 +25,8 @@ export default async function handler(
           desc: String(p.fields.Description),
           image: String(p.fields.Image),
           value: Number(p.fields.Value),
+          linkMercadoPago: String(p.fields.LinkMercadoPago),
+          refCode: String(p.fields.RefCode),
         };
         products.push(product);
       });

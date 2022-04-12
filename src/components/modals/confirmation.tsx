@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { useState } from "react";
 import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 import Guest from "../../definitions/guest";
@@ -11,13 +11,13 @@ import { VSpacer } from "../atoms/spacers";
 import Title from "../atoms/title";
 import WordDivider from "../atoms/wordDivider";
 
-const Container = styled.div`
+const Container = styled.div<{ showModal: boolean }>`
   position: absolute;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 100;
+  z-index: ${(props) => (props.showModal ? 100 : -100)};
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -27,7 +27,8 @@ const Container = styled.div`
 const CloseButton = styled.div`
   width: 40px;
   height: 40px;
-  background: #ef959d;
+  background: #cc3f4b;
+  border: 2px solid white;
   box-shadow: 0px 3.2px 32px rgba(0, 0, 0, 0.2);
   border-radius: 20px;
   display: flex;
@@ -175,7 +176,7 @@ function getNames(guest: Guest) {
 }
 
 interface Props {
-  toggleConfirmationModal: Dispatch<SetStateAction<boolean>>;
+  toggleConfirmationModal: () => void;
   showModal: boolean;
 }
 
@@ -219,12 +220,10 @@ function ConfirmationModal(props: Props) {
   };
 
   return (
-    <Container>
+    <Container showModal={props.showModal}>
       <Frame zoom={props.showModal ? 1 : 0}>
         {!isMobile && (
-          <CloseButton
-            onClick={() => props.toggleConfirmationModal(!props.showModal)}
-          >
+          <CloseButton onClick={() => props.toggleConfirmationModal()}>
             <CloseButtonText>X</CloseButtonText>
           </CloseButton>
         )}
@@ -245,9 +244,7 @@ function ConfirmationModal(props: Props) {
             </Paragraph>
             <VSpacer multiplier={5}></VSpacer>
             <Center>
-              <ActionButton
-                onClick={() => props.toggleConfirmationModal(!props.showModal)}
-              >
+              <ActionButton onClick={() => props.toggleConfirmationModal()}>
                 <ButtonText>Fechar</ButtonText>
               </ActionButton>
             </Center>
@@ -310,9 +307,7 @@ function ConfirmationModal(props: Props) {
         )}
         {isMobile && (
           <Center>
-            <MobileCloseButton
-              onClick={() => props.toggleConfirmationModal(!props.showModal)}
-            >
+            <MobileCloseButton onClick={() => props.toggleConfirmationModal()}>
               <CloseButtonText>X</CloseButtonText>
             </MobileCloseButton>
           </Center>

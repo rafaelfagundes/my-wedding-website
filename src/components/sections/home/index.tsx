@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Center from "../../atoms/center";
 import Paragraph from "../../atoms/paragraph";
 import { VSpacer } from "../../atoms/spacers";
+import TextSize from "../../atoms/textSize";
 import Title from "../../atoms/title";
 
 const StyledHome = styled.div``;
@@ -97,11 +98,6 @@ const Couple = styled.div<{ image: string }>`
   top: ${isMobile ? 144 : 148}px;
 `;
 
-const Text = styled.div`
-  max-width: 600px;
-  padding: 0 40px;
-`;
-
 function Home() {
   return (
     <StyledHome>
@@ -122,7 +118,7 @@ function Home() {
       <Title>Vão Casar</Title>
       <VSpacer multiplier={2}></VSpacer>
       <Center>
-        <Text>
+        <TextSize size={600}>
           <Paragraph center>
             Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.
             Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum.
@@ -130,7 +126,7 @@ function Home() {
             ullamcorper ultricies nisi. Maecenas tempus, tellus eget condimentum
             rhoncus.
           </Paragraph>
-        </Text>
+        </TextSize>
       </Center>
       <VSpacer multiplier={3}></VSpacer>
       <Center>

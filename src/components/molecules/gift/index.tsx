@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 import Product from "../../../definitions/product";
@@ -87,6 +87,7 @@ const Button = styled.div<{ color: string }>`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 `;
 
 const ButtonText = styled.div`
@@ -97,39 +98,47 @@ const ButtonText = styled.div`
   font-size: 16px;
   line-height: 24px;
   color: #ffffff;
+  cursor: pointer;
 `;
 
-interface Props {
-  product: Product;
-}
+type Props = {
+  product: Product | undefined;
+  setProduct: Dispatch<SetStateAction<Product | undefined>>;
+  toggleGiftModal: (paymentMethod: string) => void;
+};
 
-function Gift({ product }: Props) {
+function Gift(props: Props) {
+  const pay = (paymentMethod: string) => {
+    props.setProduct(props.product);
+    props.toggleGiftModal(paymentMethod);
+  };
+
   return (
     <StyledGift>
       <VSpacer multiplier={isMobile ? 1 : 0}></VSpacer>
-      <Picture image={product.image}></Picture>
+      <Picture image={props?.product?.image || ""}></Picture>
       <VSpacer multiplier={2}></VSpacer>
       <Center>
         <Divider></Divider>
       </Center>
       <VSpacer multiplier={2}></VSpacer>
       <TitleContainer>
-        <Title>{product.name}</Title>
+        <Title>{props?.product?.name || ""}</Title>
       </TitleContainer>
       <VSpacer multiplier={1}></VSpacer>
       <Price>
         {new Intl.NumberFormat("pt-BR", {
           style: "currency",
           currency: "BRL",
-        }).format(product.value)}
+        }).format(props?.product?.value || 0)}
       </Price>
       <VSpacer multiplier={2}></VSpacer>
       <Center>
         <ButtonsContainer>
-          <Button color="#6C176C">
+          <Button color="#6C176C" onClick={() => pay("pix")}>
             <ButtonText>pix</ButtonText>
           </Button>
-          <Button color="#29B9B9">
+          <Button color="#29B9B9" onClick={() => pay("cc")}>
             <ButtonText>cartão</ButtonText>
           </Button>
         </ButtonsContainer>

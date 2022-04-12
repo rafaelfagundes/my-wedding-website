@@ -2,6 +2,22 @@ import React from "react";
 import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 
+function getFontSize(size: number) {
+  if (isMobile) {
+    return 2 * size;
+  } else {
+    return 3.5 * size;
+  }
+}
+
+function getLineHeight(size: number) {
+  if (isMobile) {
+    return 3 * size;
+  } else {
+    return 4.4 * size;
+  }
+}
+
 function gradientBackgroundOrSolidColor(color: string | undefined) {
   if (color) {
     return `color: ${color};`;
@@ -15,12 +31,12 @@ function gradientBackgroundOrSolidColor(color: string | undefined) {
   }
 }
 
-const StyledTitle = styled.div<{ color?: string }>`
+const StyledTitle = styled.div<{ color?: string; size?: number }>`
   font-family: "Playfair Display";
   font-style: normal;
   font-weight: 500;
-  font-size: ${isMobile ? 2 : 3.5}rem;
-  line-height: ${isMobile ? 3 : 4.2}rem;
+  font-size: ${(props) => getFontSize(props.size || 1)}rem;
+  line-height: ${(props) => getLineHeight(props.size || 1)}rem;
   letter-spacing: -0.035em;
   text-align: center;
   margin: 0;
@@ -36,12 +52,15 @@ const StyledTitle = styled.div<{ color?: string }>`
 interface TitleProps {
   children: string;
   color?: string;
+  size?: number;
 }
 
 function Title(props: TitleProps) {
   return (
     <>
-      <StyledTitle color={props.color}>{props.children}</StyledTitle>
+      <StyledTitle color={props.color} size={props.size}>
+        {props.children}
+      </StyledTitle>
     </>
   );
 }

@@ -3,12 +3,14 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import ConfirmationModal from "../src/components/modals/confirmation";
+import GiftsModal from "../src/components/modals/gifts";
 import Confirmation from "../src/components/sections/confirmation";
 import Countdown from "../src/components/sections/countdown";
 import Footer from "../src/components/sections/footer";
 import Gifts from "../src/components/sections/gifts";
 import Home from "../src/components/sections/home";
 import Location from "../src/components/sections/location";
+import Product from "../src/definitions/product";
 
 const Main = styled.div``;
 
@@ -38,6 +40,7 @@ type ModalContainerProps = {
   each time the user scrolls the page. The property or properties
   that changes a lot should be placed inside 'style' as shown below. 
 */
+
 const ModalContainer = styled.div.attrs(
   ({ currentPosition, showModal }: ModalContainerProps) => ({
     style: {
@@ -60,9 +63,13 @@ const MainPage: NextPage = () => {
   const [height, setHeight] = useState(2000);
   const [currentPosition, setCurrentPosition] = useState(0);
 
+  // Confirmation Modal
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+
+  // Gifts Modal
   const [showGiftModal, setShowGiftModal] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("pix");
+  const [product, setProduct] = useState<Product>();
 
   const toogleConfirmationModal = () => {
     setCurrentPosition(document.documentElement.scrollTop);
@@ -70,10 +77,8 @@ const MainPage: NextPage = () => {
   };
 
   const toogleGiftModal = (paymentMethod: string) => {
-    if (!showGiftModal) {
-      setCurrentPosition(document.documentElement.scrollTop);
-      setPaymentMethod(paymentMethod);
-    }
+    setCurrentPosition(document.documentElement.scrollTop);
+    setPaymentMethod(paymentMethod);
     setShowGiftModal(!showGiftModal);
   };
 
@@ -97,7 +102,7 @@ const MainPage: NextPage = () => {
 
   useEffect(() => {
     window.onscroll = () => {
-      if (showConfirmationModal) {
+      if (showModal) {
         setCurrentPosition(document.documentElement.scrollTop);
       }
     };
@@ -133,6 +138,7 @@ const MainPage: NextPage = () => {
         <Gifts
           toggleGiftModal={toogleGiftModal}
           showModal={showGiftModal}
+          setProduct={setProduct}
         ></Gifts>
 
         <Footer></Footer>
@@ -141,6 +147,12 @@ const MainPage: NextPage = () => {
             toggleConfirmationModal={toogleConfirmationModal}
             showModal={showConfirmationModal}
           ></ConfirmationModal>
+          <GiftsModal
+            toggleGiftModal={toogleGiftModal}
+            showModal={showGiftModal}
+            product={product}
+            paymentMethod={paymentMethod}
+          ></GiftsModal>
         </ModalContainer>
       </Main>
     </>

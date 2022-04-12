@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 import useSWR from "swr";
@@ -7,6 +7,7 @@ import Center from "../../atoms/center";
 import Loading from "../../atoms/loading";
 import Paragraph from "../../atoms/paragraph";
 import { VSpacer } from "../../atoms/spacers";
+import TextSize from "../../atoms/textSize";
 import Title from "../../atoms/title";
 import WordDivider from "../../atoms/wordDivider";
 import Gift from "../../molecules/gift";
@@ -29,11 +30,6 @@ const BackgroundImage = styled.div<{ image: string }>`
   background-size: contain;
   background-position: top;
   background-repeat: no-repeat;
-`;
-
-const Text = styled.div`
-  max-width: 600px;
-  padding: 0 40px;
 `;
 
 const GiftsContainer = styled.div`
@@ -66,13 +62,14 @@ const Flower = styled.div<{ image: string; size: number }>`
 
 type GiftsProps = {
   toggleGiftModal: (paymentMethod: string) => void;
+  setProduct: Dispatch<SetStateAction<Product | undefined>>;
   showModal: boolean;
 };
 
 function Gifts(props: GiftsProps) {
   const { data, error } = useSWR("/api/gifts", fetcher, {
     refreshInterval: 10000,
-    refreshWhenHidden: true,
+    refreshWhenHidden: false,
     revalidateOnFocus: true,
   });
 
@@ -88,13 +85,13 @@ function Gifts(props: GiftsProps) {
         <WordDivider color="#fff">simbólicos*</WordDivider>
         <VSpacer multiplier={4}></VSpacer>
         <Center>
-          <Text>
+          <TextSize size={600}>
             <Paragraph color="#fff" center>
               Os noivos se mudarão de país, portanto não poderão levar seu
               amável presente. Mas comprarão por lá o mesmo produto ou algo que
               lembre você(s).
             </Paragraph>
-          </Text>
+          </TextSize>
         </Center>
         <VSpacer multiplier={isMobile ? 4 : 6}></VSpacer>
         {!data && (
@@ -108,7 +105,14 @@ function Gifts(props: GiftsProps) {
         <Center>
           <GiftsContainer>
             {data &&
-              data.map((p: Product) => <Gift key={p.id} product={p}></Gift>)}
+              data.map((p: Product) => (
+                <Gift
+                  key={p.id}
+                  product={p}
+                  setProduct={props.setProduct}
+                  toggleGiftModal={props.toggleGiftModal}
+                ></Gift>
+              ))}
           </GiftsContainer>
         </Center>
       </BackgroundImage>

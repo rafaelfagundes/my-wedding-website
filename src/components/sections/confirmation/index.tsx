@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Center from "../../atoms/center";
 import Paragraph from "../../atoms/paragraph";
 import { VSpacer } from "../../atoms/spacers";
+import TextSize from "../../atoms/textSize";
 import Title from "../../atoms/title";
 import WordDivider from "../../atoms/wordDivider";
 
@@ -46,11 +47,6 @@ const ButtonText = styled.div`
   text-transform: uppercase;
 `;
 
-const Text = styled.div`
-  max-width: 680px;
-  padding: 0 40px;
-`;
-
 interface Props {
   toggleConfirmationModal: () => void;
   showModal: boolean;
@@ -71,17 +67,17 @@ function Confirmation(props: Props) {
       <WordDivider>eu vou!</WordDivider>
       <VSpacer multiplier={isMobile ? 2 : 4}></VSpacer>
       <Center>
-        <Text>
+        <TextSize size={600}>
           <Paragraph center color="#6c176c">
             Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.
             Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum.
             Aenean imperdiet.
           </Paragraph>
-        </Text>
+        </TextSize>
       </Center>
       <VSpacer multiplier={isMobile ? 3 : 5}></VSpacer>
       <Center>
-        <Button onClick={() => props.toggleConfirmationModal(!props.showModal)}>
+        <Button onClick={() => props.toggleConfirmationModal()}>
           <ButtonText>Confirmar Presença</ButtonText>
         </Button>
       </Center>
