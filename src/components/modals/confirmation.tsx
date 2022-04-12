@@ -175,10 +175,10 @@ function getNames(guest: Guest) {
   }
 }
 
-interface Props {
+type Props = {
   toggleConfirmationModal: () => void;
   showModal: boolean;
-}
+};
 
 function ConfirmationModal(props: Props) {
   const [data, setData] = useState(null);

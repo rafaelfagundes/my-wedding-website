@@ -24,10 +24,10 @@ const Word = styled.div<{ color?: string }>`
   font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
 `;
 
-interface Props {
+type Props = {
   children: string;
   color?: string;
-}
+};
 
 function WordDivider(props: Props) {
   return (

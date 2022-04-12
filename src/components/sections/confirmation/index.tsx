@@ -47,10 +47,10 @@ const ButtonText = styled.div`
   text-transform: uppercase;
 `;
 
-interface Props {
+type Props = {
   toggleConfirmationModal: () => void;
   showModal: boolean;
-}
+};
 
 function Confirmation(props: Props) {
   return (

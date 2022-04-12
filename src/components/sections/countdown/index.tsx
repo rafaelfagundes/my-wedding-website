@@ -57,10 +57,10 @@ const Description = styled.div`
   font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
 `;
 
-interface NumberAndDescriptionProps {
+type NumberAndDescriptionProps = {
   value: number;
   children: string;
-}
+};
 
 function NumberAndDescription(props: NumberAndDescriptionProps) {
   return (
@@ -72,12 +72,12 @@ function NumberAndDescription(props: NumberAndDescriptionProps) {
   );
 }
 
-interface CountdownProps {
+type CountdownProps = {
   days: number;
   hours: number;
   minutes: number;
   seconds: number;
-}
+};
 
 function Countdown() {
   const renderer = ({ days, hours, minutes, seconds }: CountdownProps) => {

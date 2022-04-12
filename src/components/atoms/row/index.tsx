@@ -7,9 +7,9 @@ const StyledRow = styled.div`
   align-items: center;
 `;
 
-interface Props {
+type Props = {
   children: any;
-}
+};
 
 function Row(props: Props) {
   return <StyledRow>{props.children}</StyledRow>;

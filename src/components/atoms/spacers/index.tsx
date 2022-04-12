@@ -9,9 +9,9 @@ const StyledVSpacer = styled.div<{ multiplier: number }>`
   height: ${(props) => (props.multiplier ? props.multiplier * 10 : 10)}px;
 `;
 
-interface SpacerProps {
+type SpacerProps = {
   multiplier?: number;
-}
+};
 
 export function HSpacer(props: SpacerProps) {
   return <StyledHSpacer multiplier={props.multiplier || 1}></StyledHSpacer>;

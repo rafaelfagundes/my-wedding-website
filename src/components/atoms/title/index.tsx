@@ -49,11 +49,11 @@ const StyledTitle = styled.div<{ color?: string; size?: number }>`
   /* text-fill-color: transparent; */
 `;
 
-interface TitleProps {
+type TitleProps = {
   children: string;
   color?: string;
   size?: number;
-}
+};
 
 function Title(props: TitleProps) {
   return (

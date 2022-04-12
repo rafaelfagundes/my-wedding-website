@@ -9,9 +9,9 @@ const StyledLoading = styled.div<{ image: string; size: number }>`
   height: ${(props) => props.size}px;
 `;
 
-interface Props {
+type Props = {
   size: number;
-}
+};
 
 function Loading(props: Props) {
   return (

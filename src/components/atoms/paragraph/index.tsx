@@ -34,12 +34,12 @@ const StyledParagraph = styled.div<{
   font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
 `;
 
-interface Props {
+type Props = {
   children: any;
   center?: boolean;
   color?: string;
   size?: number;
-}
+};
 
 function Paragraph(props: Props) {
   return (

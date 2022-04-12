@@ -1,4 +1,4 @@
-export interface Guest {
+export type Guest = {
   id: string;
   internalId?: string;
   firstGuest: string;
@@ -6,12 +6,12 @@ export interface Guest {
   thirdGuest?: string;
   confirmed: boolean;
   numberOfGuests: number;
-}
+};
 
-export interface GuestConfirmation {
+export type GuestConfirmation = {
   alreadyConfirmed: boolean;
   confirmed: boolean;
   numberOfGuests: number;
-}
+};
 
 export default Guest;

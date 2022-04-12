@@ -1,4 +1,4 @@
-export interface Product {
+export type Product = {
   id: string;
   name: string;
   value: number;
@@ -6,6 +6,6 @@ export interface Product {
   image: string;
   linkMercadoPago: string;
   refCode: string;
-}
+};
 
 export default Product;

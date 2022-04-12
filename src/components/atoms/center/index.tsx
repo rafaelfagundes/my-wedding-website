@@ -8,9 +8,9 @@ const StyledRow = styled.div`
   justify-content: center;
 `;
 
-interface Props {
+type Props = {
   children: any;
-}
+};
 
 function Center(props: Props) {
   return <StyledRow>{props.children}</StyledRow>;
