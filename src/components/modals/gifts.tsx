@@ -40,7 +40,7 @@ const CloseButton = styled.div`
 
 const MobileCloseButton = styled(CloseButton)`
   position: relative;
-  top: 70px;
+  top: 60px;
   left: 0px;
 `;
 
@@ -55,13 +55,13 @@ const CloseButtonText = styled.div`
 `;
 
 const Frame = styled.div<{ zoom: number }>`
+  margin-top: ${isMobile ? -40 : 0}px;
   width: ${isMobile ? "90%" : "600px"};
   background-color: white;
   border-radius: 20px;
-  padding: ${isMobile ? "0px 20px 10px 20px" : "0px 40px 60px 40px"};
+  padding: ${isMobile ? "30px 20px 0px 20px" : "0px 40px 60px 40px"};
   box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.2);
   z-index: 101;
-
   transition: transform 0.4s ease-in-out;
   transform: scale(${(props) => props.zoom});
 `;
@@ -100,8 +100,8 @@ const PSText = styled.span`
   font-family: "Outfit";
   font-style: normal;
   font-weight: 700;
-  font-size: 1.2rem;
-  line-height: 1.3rem;
+  font-size: ${isMobile ? 1 : 1.2}rem;
+  line-height: ${isMobile ? 1 : 1.3}rem;
   text-align: center;
 
   color: #6c176c;
@@ -111,15 +111,15 @@ const ProductValue = styled.span`
   font-family: "Outfit";
   font-weight: 700;
   color: #9f229f;
-  font-size: 1.2rem;
+  font-size: 1rem;
 `;
 
 const PixKey = styled.div`
   font-family: "Outfit";
   font-style: normal;
   font-weight: 700;
-  font-size: 1.2rem;
-  line-height: 1.2rem;
+  font-size: ${isMobile ? 1 : 1.2}rem;
+  line-height: ${isMobile ? 1 : 1.2}rem;
   text-align: center;
   letter-spacing: 0.035em;
   color: #37985c;
@@ -152,7 +152,6 @@ function GiftModal(props: Props) {
 
   const generateQrcodeImage = async (qrcode: QRCodeProps) => {
     const generatedImage = await qrcode.base64();
-    console.log("generatedImage", generatedImage);
     setQrcodeImage(generatedImage);
   };
 
@@ -187,13 +186,13 @@ function GiftModal(props: Props) {
             ? "Pagar com Pix"
             : "Pagar com Cartão ou Boleto"}
         </Title>
-        <VSpacer multiplier={2}></VSpacer>
 
         {props.paymentMethod === "cc" && (
           <>
+            <VSpacer multiplier={2}></VSpacer>
             <Center>
-              <TextSize size={500}>
-                <Paragraph center size={0.8}>
+              <TextSize size={650}>
+                <Paragraph center size={0.9}>
                   O pagamento será processado pelo Mercado Pago, não é
                   necessário criar uma conta.
                 </Paragraph>
@@ -212,9 +211,13 @@ function GiftModal(props: Props) {
               </a>
             </Center>
             <VSpacer multiplier={3}></VSpacer>
-            <HorizontalLine></HorizontalLine>
-            <VSpacer multiplier={2}></VSpacer>
-            <Paragraph center size={0.8}>
+            {!isMobile && (
+              <>
+                <HorizontalLine></HorizontalLine>
+                <VSpacer multiplier={2}></VSpacer>
+              </>
+            )}
+            <Paragraph center size={0.9}>
               Siga as instruções na tela do Mercado Pago.
             </Paragraph>
             <VSpacer multiplier={1}></VSpacer>
@@ -226,19 +229,23 @@ function GiftModal(props: Props) {
 
         {props.paymentMethod === "pix" && (
           <>
+            <VSpacer multiplier={1}></VSpacer>
             <Center>
-              <QRCodeImage size={250} image={String(qrcodeImage)}></QRCodeImage>
+              <QRCodeImage
+                size={isMobile ? 200 : 250}
+                image={String(qrcodeImage)}
+              ></QRCodeImage>
             </Center>
-            <VSpacer multiplier={1.5}></VSpacer>
+            <VSpacer multiplier={isMobile ? 1 : 1.5}></VSpacer>
             <Center>
-              <TextSize size={500}>
-                <Paragraph center size={0.8}>
+              <TextSize size={650}>
+                <Paragraph center size={0.9}>
                   Caso prefira, pode copiar os dados e colar no seu banco (Pix
                   Copia & Cola)
                 </Paragraph>
               </TextSize>
             </Center>
-            <VSpacer multiplier={3}></VSpacer>
+            <VSpacer multiplier={isMobile ? 2 : 3}></VSpacer>
             <Center>
               <ActionButton
                 onClick={() =>
@@ -248,10 +255,14 @@ function GiftModal(props: Props) {
                 <ButtonText>Copiar Dados do Pix</ButtonText>
               </ActionButton>
             </Center>
-            <VSpacer multiplier={3}></VSpacer>
-            <HorizontalLine></HorizontalLine>
-            <VSpacer multiplier={2}></VSpacer>
-            <Paragraph center size={0.8}>
+            <VSpacer multiplier={isMobile ? 2 : 3}></VSpacer>
+            {!isMobile && (
+              <>
+                <HorizontalLine></HorizontalLine>
+                <VSpacer multiplier={2}></VSpacer>
+              </>
+            )}
+            <Paragraph center size={0.9}>
               Ou envie o valor (
               <ProductValue>
                 {new Intl.NumberFormat("pt-BR", {
@@ -259,7 +270,7 @@ function GiftModal(props: Props) {
                   currency: "BRL",
                 }).format(props?.product?.value || 0)}
               </ProductValue>
-              ) diretamente para:
+              ) para:
             </Paragraph>
             <VSpacer multiplier={1}></VSpacer>
             <PixKey>pix@rafaelfagundes.com</PixKey>

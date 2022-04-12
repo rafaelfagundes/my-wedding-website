@@ -208,7 +208,6 @@ function ConfirmationModal(props: Props) {
       const response = await axios.post(`/api/confirmation`, {
         id: guestId,
       });
-      console.log("response", response.data);
       setLoading(false);
       setConfirmed(true);
     } catch (error) {

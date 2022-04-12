@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const StyledText = styled.span<{ size: number }>`
   max-width: ${(props) => props.size}px;
-  padding: 0 40px;
+  padding: 0 20px;
 `;
 
 type Props = {

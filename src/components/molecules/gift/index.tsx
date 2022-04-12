@@ -7,7 +7,7 @@ import { VSpacer } from "../../atoms/spacers";
 
 const StyledGift = styled.div`
   background-color: #fff;
-  width: ${isMobile ? "90%" : "250px"};
+  max-width: ${isMobile ? "320px" : "250px"};
   border-radius: 10px;
   margin-bottom: ${isMobile ? 20 : 40}px;
   min-height: ${isMobile ? undefined : "430px"};
@@ -118,10 +118,10 @@ function Gift(props: Props) {
       <VSpacer multiplier={isMobile ? 1 : 0}></VSpacer>
       <Picture image={props?.product?.image || ""}></Picture>
       <VSpacer multiplier={2}></VSpacer>
-      <Center>
+      {/* <Center>
         <Divider></Divider>
-      </Center>
-      <VSpacer multiplier={2}></VSpacer>
+      </Center> */}
+      {/* <VSpacer multiplier={2}></VSpacer> */}
       <TitleContainer>
         <Title>{props?.product?.name || ""}</Title>
       </TitleContainer>
