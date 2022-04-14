@@ -82,7 +82,10 @@ const Invites = styled.div`
   font-size: 4vh;
   line-height: 4vh;
   text-align: center;
-  color: #643b6d;
+  background: linear-gradient(150.89deg, #ad45ad 0.24%, #6c176c 101.15%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   font-feature-settings: "dlig", "liga", "calt";
   font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
   margin: -1vh 1.5vh 0 1.5vh;
@@ -97,7 +100,7 @@ const Text = styled.div`
   text-align: center;
   letter-spacing: -0.01em;
   width: 45vh;
-  color: #ffffff;
+  color: #fff;
 `;
 
 const GuestName = styled.span`
