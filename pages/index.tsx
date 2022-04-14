@@ -209,27 +209,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
 
   return {
     props: {
-      text: {
-        confirmationbutton: "string",
-        confirmationseparator: "string",
-        confirmationtext: "string",
-        confirmationtitle: "string",
-        footertext: "string",
-        giftsseparator: "string",
-        giftstext: "string",
-        giftstitle: "string",
-        hero: "string",
-        hometext: "string",
-        hometitle: "string",
-        locationtitle: "string",
-        locationlink: "string",
-        locationdate: "string",
-        locationmainaddress: "string",
-        locationaddress1: "string",
-        locationaddress2: "string",
-        locationname1: "string",
-        locationname2: "string",
-      },
+      text,
     },
   };
 }
