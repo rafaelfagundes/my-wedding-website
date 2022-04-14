@@ -1,7 +1,9 @@
 import { GetStaticPropsContext } from "next";
 import React from "react";
+import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 import { server } from "../../config";
+import LittleFlower from "../../src/components/atoms/littleFlower";
 import { VSpacer } from "../../src/components/atoms/spacers";
 import Guest from "../../src/definitions/guest";
 
@@ -14,11 +16,12 @@ const Container = styled.div`
 
 const StyledInvite = styled.div<{ size: number }>`
   position: relative;
-  width: ${(props) => props.size * 0.7058823529}vh;
+  width: ${(props) =>
+    isMobile ? `${props.size}vw` : `${props.size * 0.7058823529}vh`};
   height: ${(props) => props.size}vh;
   background: linear-gradient(
     153.51deg,
-    rgba(239, 149, 157, 0.81) 0%,
+    rgba(239, 149, 157, 0.75) 0%,
     #ef959d 100%
   );
 `;
@@ -39,8 +42,8 @@ const Couple = styled.div`
 
 const Name = styled.div`
   font-family: "Playfair Display";
-  font-size: 8.7vh;
-  line-height: 8.7vh;
+  font-size: 8vh;
+  line-height: 8vh;
   text-align: center;
   color: #ffffff;
   font-feature-settings: "dlig", "liga", "calt";
@@ -56,13 +59,12 @@ const Separator = styled.div`
 `;
 
 const Line = styled.div`
-  width: 15vh;
+  width: ${isMobile ? 8 : 10}vh;
   height: 1px;
-  background-color: #ffffff;
+  background-color: #643b6d;
 `;
 
 const And = styled.div`
-  color: #ffffff;
   margin: 0 2.2vh;
   font-family: "Playfair Display";
   font-size: 4.5vh;
@@ -77,13 +79,13 @@ const Invites = styled.div`
   font-family: "Playfair Display";
   font-style: italic;
   font-weight: 400;
-  font-size: 4.5vh;
-  line-height: 4.5vh;
+  font-size: 4vh;
+  line-height: 4vh;
   text-align: center;
   color: #643b6d;
-  margin-top: 15px;
   font-feature-settings: "dlig", "liga", "calt";
   font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
+  margin: -1vh 1.5vh 0 1.5vh;
 `;
 
 const Text = styled.div`
@@ -103,27 +105,29 @@ const GuestName = styled.span`
 `;
 
 const Date = styled.div`
+  /* background-color: #6b4e71; */
   background: #ffffff;
-  width: 33vh;
-  height: 6.5vh;
+  width: 30vh;
+  height: 5vh;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin: 2vh 0;
+  margin: 0.5vh 0 0.5vh 0;
 `;
 
 const DateText = styled.div`
   font-family: "Outfit";
   font-style: normal;
   font-weight: 400;
-  font-size: 2.3vh;
-  line-height: 2.3vh;
+  font-size: 2vh;
+  line-height: 2vh;
   text-align: center;
   letter-spacing: 0.2vh;
   text-transform: uppercase;
 
-  color: #ef959d;
+  /* color: #ef959d; */
+  color: #6b4e71;
 `;
 
 const Location = styled.div`
@@ -137,22 +141,23 @@ const Address = styled.div`
   font-family: "Outfit";
   font-style: normal;
   font-weight: 400;
-  font-size: 2.3vh;
-  line-height: 3vh;
+  font-size: 2vh;
+  line-height: 2.7vh;
   text-align: center;
   color: #ffffff;
 `;
 
 const LocationName = styled(Address)`
   font-weight: 700;
+  line-height: 3vh;
 `;
 
 const TopFlower = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  width: 55.94771242vh;
-  height: 51.96078431vh;
+  width: ${isMobile ? 44.94771242 : 55.94771242}vh;
+  height: ${isMobile ? 40.96078431 : 51.96078431}vh;
   background-image: url(/images/tl-flower.png);
   background-position: center;
   background-size: cover;
@@ -170,18 +175,15 @@ const BottomFlower = styled.div`
 `;
 
 const Footer = styled.div<{ size: number }>`
-  width: ${(props) => props.size * 0.7058823529}vh;
+  width: ${(props) =>
+    isMobile ? `${props.size}vw ` : `${props.size * 0.7058823529}vh`};
   height: 8vh;
-  background: #6b4e71;
+  /* background: #6b4e71; */
+  background-color: rgba(0, 0, 0, 0.25);
   display: flex;
-  flex-direction: row;
+  flex-direction: ${isMobile ? "column" : "row"};
   align-items: center;
-  justify-content: space-between;
-  padding: 0 2vh;
-`;
-
-const Empty = styled.div`
-  width: 14vh;
+  justify-content: space-around;
 `;
 
 const FooterContent = styled.div`
@@ -199,10 +201,16 @@ const FooterImage = styled.div`
   margin-right: 0.9vh;
 `;
 
-const FooterText = styled.div`
+const ConfirmationText = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* margin-bottom: 20px; */
+`;
+
+const BottomText = styled.div`
   font-family: "Outfit";
-  font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 2.1vh;
   text-align: center;
   letter-spacing: -0.01em;
@@ -211,15 +219,22 @@ const FooterText = styled.div`
 
 const WebsiteUrl = styled.a`
   text-decoration: underline;
+  font-family: "Outfit";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 2.1vh;
+  text-align: center;
+  letter-spacing: -0.01em;
+  color: #6b4e71;
 `;
 
 const Code = styled.div`
-  background: rgba(255, 255, 255, 0.8);
+  /* background: rgba(255, 255, 255, 0.8); */
   width: 16vh;
-  height: 5.3vh;
+  height: 5vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   border-radius: 0.8vh;
 `;
@@ -230,7 +245,8 @@ const CodeTitle = styled.div`
   font-weight: 400;
   font-size: 1.2vh;
   line-height: 1.1vh;
-  color: #6b4e71;
+  /* color: #6b4e71; */
+  color: #fff;
 `;
 
 const CodeValue = styled.div`
@@ -239,7 +255,8 @@ const CodeValue = styled.div`
   font-weight: 500;
   font-size: 3.2vh;
   line-height: 3.2vh;
-  color: #6b4e71;
+  /* color: #6b4e71; */
+  color: #fff;
 `;
 
 type Props = {
@@ -284,17 +301,18 @@ function Invite({ guest }: Props) {
       <StyledInvite size={100}>
         <TopFlower></TopFlower>
         <Content size={100}>
-          <VSpacer multiplier={10}></VSpacer>
+          <VSpacer multiplier={isMobile ? 5 : 10}></VSpacer>
           <Couple>
             <Name>Elisa</Name>
-            <Separator>
-              <Line></Line>
-              <And>&</And>
-              <Line></Line>
-            </Separator>
+            <And>&</And>
             <Name>Rafael</Name>
           </Couple>
-          <Invites>~ convidam ~</Invites>
+          <Separator>
+            <Line></Line>
+            <Invites>convidam</Invites>
+            <Line></Line>
+          </Separator>
+          {/* <Invites>~ convidam ~</Invites> */}
           <Text>{getGuests(guest)}</Text>
           <Date>
             <DateText>21 maio 2022 às 13:00</DateText>
@@ -304,20 +322,18 @@ function Invite({ guest }: Props) {
             <Address>R. Gino Ovídio Della Croce, 223</Address>
             <Address>São João del Rei - MG</Address>
           </Location>
+          <LittleFlower></LittleFlower>
+          <ConfirmationText>
+            <BottomText>Visite nosso site e confirme sua presença</BottomText>
+            <WebsiteUrl
+              href={`https://www.elisarafael.com?guestId=${guest.id}`}
+            >
+              www.elisarafael.com
+            </WebsiteUrl>
+          </ConfirmationText>
           <BottomFlower></BottomFlower>
         </Content>
         <Footer size={100}>
-          <FooterContent>
-            <FooterImage></FooterImage>
-            <FooterText>
-              Confirme sua presença em:{" "}
-              <WebsiteUrl
-                href={`https://www.elisarafael.com?guestId=${guest.id}`}
-              >
-                www.elisarafael.com
-              </WebsiteUrl>
-            </FooterText>
-          </FooterContent>
           <Code>
             <CodeTitle>CÓDIGO DE CONVIDADO</CodeTitle>
             <CodeValue>{guest.id}</CodeValue>
