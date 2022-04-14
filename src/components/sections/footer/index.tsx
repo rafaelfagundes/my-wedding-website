@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Text } from "../../../definitions/text";
 
 const StyledFooter = styled.div`
   width: 100vw;
@@ -29,11 +30,15 @@ const CreditsText = styled.div`
   color: #ffffff;
 `;
 
-function Footer() {
+type Props = {
+  text: Text;
+};
+
+function Footer(props: Props) {
   return (
     <StyledFooter>
       <Credits>
-        <CreditsText>Desenvolvido por Rafael Fagundes - 2022</CreditsText>
+        <CreditsText>{props.text.footertext}</CreditsText>
       </Credits>
     </StyledFooter>
   );

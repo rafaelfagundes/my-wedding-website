@@ -1,8 +1,9 @@
-import type { NextPage } from "next";
+import type { GetStaticPropsContext } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { server } from "../config";
 import ConfirmationModal from "../src/components/modals/confirmation";
 import GiftsModal from "../src/components/modals/gifts";
 import Confirmation from "../src/components/sections/confirmation";
@@ -12,6 +13,7 @@ import Gifts from "../src/components/sections/gifts";
 import Home from "../src/components/sections/home";
 import Location from "../src/components/sections/location";
 import Product from "../src/definitions/product";
+import { Text as TextProps } from "../src/definitions/text";
 
 const Main = styled.div``;
 
@@ -57,7 +59,11 @@ const ModalContainer = styled.div.attrs(
   transition: position 1s ease-in-out;
 `;
 
-const MainPage: NextPage = () => {
+type Props = {
+  text: TextProps;
+};
+
+const MainPage = (props: Props) => {
   const router = useRouter();
 
   const [showModal, setShowModal] = useState(false);
@@ -141,7 +147,7 @@ const MainPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Elisa e Rafael</title>
+        <title>{props.text.hero}</title>
         <meta
           name="description"
           content="Website do Casamento da Elisa com o Rafael."
@@ -154,20 +160,22 @@ const MainPage: NextPage = () => {
           height={height}
           bringToFront={bringToFront}
         ></BackgroundBlur>
-        <Home></Home>
-        <Location></Location>
+        <Home text={props.text}></Home>
+        <Location text={props.text}></Location>
         <Confirmation
           toggleConfirmationModal={toogleConfirmationModal}
           showModal={showConfirmationModal}
+          text={props.text}
         ></Confirmation>
         <Countdown showCountdown={showCountdown}></Countdown>
         <Gifts
           toggleGiftModal={toogleGiftModal}
           showModal={showGiftModal}
           setProduct={setProduct}
+          text={props.text}
         ></Gifts>
 
-        <Footer></Footer>
+        <Footer text={props.text}></Footer>
         <ModalContainer currentPosition={currentPosition} showModal={showModal}>
           <ConfirmationModal
             toggleConfirmationModal={toogleConfirmationModal}
@@ -187,3 +195,21 @@ const MainPage: NextPage = () => {
 };
 
 export default MainPage;
+
+export async function getStaticProps(context: GetStaticPropsContext) {
+  let text = null;
+
+  try {
+    const url = `${server}/api/text`;
+    const response = await fetch(url);
+    text = await response.json();
+  } catch (error) {
+    console.log("error", error);
+  }
+
+  return {
+    props: {
+      text,
+    },
+  };
+}

@@ -1,6 +1,7 @@
 import React from "react";
 import { isMobile } from "react-device-detect";
 import styled from "styled-components";
+import { Text as TextProps } from "../../../definitions/text";
 import Center from "../../atoms/center";
 import Paragraph from "../../atoms/paragraph";
 import { VSpacer } from "../../atoms/spacers";
@@ -98,12 +99,16 @@ const Couple = styled.div<{ image: string }>`
   top: ${isMobile ? 144 : 148}px;
 `;
 
-function Home() {
+type Props = {
+  text: TextProps;
+};
+
+function Home(props: Props) {
   return (
     <StyledHome>
       <Background></Background>
       <Center>
-        <HeaderTitle>Elisa & Rafael</HeaderTitle>
+        <HeaderTitle>{props.text.hero}</HeaderTitle>
       </Center>
       <FlowersA image="images/tl-flower.png"></FlowersA>
       {!isMobile && (
@@ -115,17 +120,11 @@ function Home() {
       )}
       <Couple image="images/couple.png"></Couple>
       <VSpacer multiplier={isMobile ? 16 : 16}></VSpacer>
-      <Title>Vão Casar</Title>
+      <Title>{props.text.hometitle}</Title>
       <VSpacer multiplier={2}></VSpacer>
       <Center>
         <TextSize size={600}>
-          <Paragraph center>
-            Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.
-            Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum.
-            Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur
-            ullamcorper ultricies nisi. Maecenas tempus, tellus eget condimentum
-            rhoncus.
-          </Paragraph>
+          <Paragraph center>{props.text.hometext}</Paragraph>
         </TextSize>
       </Center>
       <VSpacer multiplier={3}></VSpacer>

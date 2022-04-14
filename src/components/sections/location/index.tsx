@@ -1,6 +1,7 @@
 import React from "react";
 import { isMobile } from "react-device-detect";
 import styled from "styled-components";
+import { Text as TextProps } from "../../../definitions/text";
 import Center from "../../atoms/center";
 import LittleFlower from "../../atoms/littleFlower";
 import { VSpacer } from "../../atoms/spacers";
@@ -52,7 +53,7 @@ const Name = styled.div`
   font-style: normal;
   font-weight: 400;
   font-size: ${isMobile ? 2.2 : 3.2}rem;
-  line-height: ${isMobile ? 2.8 : 3.8}rem;
+  line-height: ${isMobile ? 2.9 : 3.9}rem;
   text-align: center;
   font-feature-settings: "dlig", "liga", "calt";
   font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
@@ -128,11 +129,15 @@ const ButtonText = styled.div`
   color: #ef959d;
 `;
 
-function Location() {
+type Props = {
+  text: TextProps;
+};
+
+function Location(props: Props) {
   return (
     <StyledLocation>
       <Center>
-        <Title color="white">Local & Data</Title>
+        <Title color="white">{props.text.locationtitle}</Title>
       </Center>
       <VSpacer multiplier={isMobile ? 2.5 : 5}></VSpacer>
       <Center>
@@ -144,21 +149,21 @@ function Location() {
             </Center>
             <VSpacer multiplier={2}></VSpacer>
             <Names>
-              <Name>Elisa Margotte</Name>
+              <Name>{props.text.locationname1}</Name>
               <VSpacer multiplier={isMobile ? 1 : 2}></VSpacer>
               <WordDivider>&</WordDivider>
               <VSpacer multiplier={isMobile ? 0.4 : 1}></VSpacer>
-              <Name>Rafael Fagundes</Name>
+              <Name>{props.text.locationname2}</Name>
             </Names>
             <VSpacer multiplier={isMobile ? 3 : 4}></VSpacer>
-            <Date>21 de maio de 2022 às 13:00</Date>
+            <Date>{props.text.locationdate}</Date>
             <VSpacer multiplier={isMobile ? 3 : 4}></VSpacer>
-            <MainAddress>POUSADA RECANTO DA ALEGRIA</MainAddress>
-            <Address>R. Gino Ovídio Della Croce, 223</Address>
-            <Address>São João del Rei - MG</Address>
+            <MainAddress>{props.text.locationmainaddress}</MainAddress>
+            <Address>{props.text.locationaddress1}</Address>
+            <Address>{props.text.locationaddress2}</Address>
             <VSpacer multiplier={4}></VSpacer>
 
-            <a href="https://goo.gl/maps/aXc4xUkwjMm9pjHn8">
+            <a href={props.text.locationlink}>
               <Button>
                 <ButtonImage image="/icons/map.svg"></ButtonImage>
                 <ButtonText>Ver Mapa</ButtonText>

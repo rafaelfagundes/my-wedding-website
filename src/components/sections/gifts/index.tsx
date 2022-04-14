@@ -3,6 +3,7 @@ import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 import useSWR from "swr";
 import Product from "../../../definitions/product";
+import { Text as TextProps } from "../../../definitions/text";
 import Center from "../../atoms/center";
 import Loading from "../../atoms/loading";
 import Paragraph from "../../atoms/paragraph";
@@ -64,6 +65,7 @@ type GiftsProps = {
   toggleGiftModal: (paymentMethod: string) => void;
   setProduct: Dispatch<SetStateAction<Product | undefined>>;
   showModal: boolean;
+  text: TextProps;
 };
 
 function Gifts(props: GiftsProps) {
@@ -80,16 +82,14 @@ function Gifts(props: GiftsProps) {
   return (
     <StyledGifts>
       <BackgroundImage image="/images/section.png">
-        <Title color="#fff">Presentes</Title>
+        <Title color="#fff">{props.text.giftstitle}</Title>
         <VSpacer multiplier={1}></VSpacer>
-        <WordDivider color="#fff">simbólicos*</WordDivider>
+        <WordDivider color="#fff">{props.text.giftsseparator}</WordDivider>
         <VSpacer multiplier={4}></VSpacer>
         <Center>
           <TextSize size={600}>
             <Paragraph color="#fff" center>
-              Os noivos se mudarão de país, portanto não poderão levar seu
-              amável presente. Mas comprarão por lá o mesmo produto ou algo que
-              lembre você(s).
+              {props.text.giftstext}
             </Paragraph>
           </TextSize>
         </Center>
