@@ -130,3 +130,7 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# screenshots
+
+/utils/screenshots
