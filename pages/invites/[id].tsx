@@ -275,8 +275,6 @@ function getGuests(guest: Guest) {
 }
 
 function Invite({ guest }: Props) {
-  console.log("router", router);
-
   if (!guest) {
     return <></>;
   }

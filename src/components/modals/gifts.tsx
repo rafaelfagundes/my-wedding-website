@@ -231,10 +231,12 @@ function GiftModal(props: Props) {
           <>
             <VSpacer multiplier={1}></VSpacer>
             <Center>
-              <QRCodeImage
-                size={isMobile ? 200 : 250}
-                image={String(qrcodeImage)}
-              ></QRCodeImage>
+              {qrcodeImage && (
+                <QRCodeImage
+                  size={isMobile ? 200 : 250}
+                  image={String(qrcodeImage)}
+                ></QRCodeImage>
+              )}
             </Center>
             <VSpacer multiplier={isMobile ? 1 : 1.5}></VSpacer>
             <Center>

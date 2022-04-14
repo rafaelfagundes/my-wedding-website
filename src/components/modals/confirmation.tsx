@@ -182,7 +182,6 @@ type Props = {
 };
 
 function ConfirmationModal(props: Props) {
-  console.log("props", props.guestId);
   const [data, setData] = useState(null);
   const [guestId, setGuestId] = useState<string>();
   const [loading, setLoading] = useState(false);

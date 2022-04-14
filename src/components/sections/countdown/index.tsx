@@ -79,7 +79,11 @@ type CountdownProps = {
   seconds: number;
 };
 
-function Countdown() {
+type Props = {
+  showCountdown: boolean;
+};
+
+function Countdown(props: Props) {
   const renderer = ({ days, hours, minutes, seconds }: CountdownProps) => {
     return (
       <Shade>
@@ -98,12 +102,16 @@ function Countdown() {
   };
 
   return (
-    <StyledCountdown image="/images/countdown-bg.jpg">
-      <ReactCountdown
-        date={new Date(2022, 4, 21, 13, 0, 0)}
-        renderer={renderer}
-      ></ReactCountdown>
-    </StyledCountdown>
+    <>
+      {props.showCountdown && (
+        <StyledCountdown image="/images/countdown-bg.jpg">
+          <ReactCountdown
+            date={new Date(2022, 4, 21, 13, 0, 0)}
+            renderer={renderer}
+          ></ReactCountdown>
+        </StyledCountdown>
+      )}
+    </>
   );
 }
 
