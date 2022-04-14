@@ -7,6 +7,7 @@ const base = new Airtable({ apiKey: process.env.airtableAPIkey }).base(
 );
 
 function getNumberOfGuests(serverGuest: any): number {
+  // console.log("serverGuest", serverGuest);
   if (serverGuest["Second Companion"]) {
     return 3;
   } else if (serverGuest["Companion"]) {
@@ -14,6 +15,22 @@ function getNumberOfGuests(serverGuest: any): number {
   } else {
     return 1;
   }
+}
+
+async function countGuests() {
+  const result = await base("Guests").select({}).all();
+
+  let numberOfGuests: number = 0;
+  let numberOfConfirmedGuests: number = 0;
+  result.forEach((line) => {
+    const guestCount = getNumberOfGuests(line.fields);
+    numberOfGuests = numberOfGuests + guestCount;
+    if (line.fields.Confirmed) {
+      numberOfConfirmedGuests = numberOfConfirmedGuests + guestCount;
+    }
+  });
+
+  return { guests: numberOfGuests, confirmedGuests: numberOfConfirmedGuests };
 }
 
 async function search(id: string, showInternalId: boolean) {
@@ -74,6 +91,12 @@ async function confirmInvitation(id: string) {
   }
 }
 
+async function getIds() {
+  const result = await base("Guests").select({}).all();
+  const ids = result.map((i) => i.fields.GuestID);
+  return ids;
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -87,6 +110,25 @@ export default async function handler(
       } else {
         res.status(404).json({ error: "GuestID not found" });
       }
+    } else if (req.query.option && req.query.option === "count") {
+      const result = await countGuests();
+      if (result) {
+        res.json(result);
+      } else {
+        res.status(404).json({ error: "Server error" });
+      }
+    } else if (
+      req.query.option &&
+      req.query.pwd &&
+      req.query.option === "guestids" &&
+      req.query.pwd === "conestoga"
+    ) {
+      const result = await getIds();
+      if (result) {
+        res.json(result);
+      } else {
+        res.status(404).json({ error: "Guests not found" });
+      }
     } else {
       res.status(404).json({ error: "GuestID not found" });
     }
@@ -99,10 +141,10 @@ export default async function handler(
       if (result) {
         res.json(result);
       } else {
-        res.status(404).json({ error: "GuestID not found" });
+        res.status(404).json({ error: "Confirmation can't done." });
       }
     } else {
-      res.status(404).json({ error: "GuestID not found" });
+      res.status(404).json({ error: "Guest ID was not sent." });
     }
   } else {
     res.status(500).json({ error: "Internal server error" });
