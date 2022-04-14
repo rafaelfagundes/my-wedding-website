@@ -43,6 +43,8 @@ const Name = styled.div`
   line-height: 8.7vh;
   text-align: center;
   color: #ffffff;
+  font-feature-settings: "dlig", "liga", "calt";
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
 `;
 
 const Separator = styled.div`
@@ -67,6 +69,8 @@ const And = styled.div`
   line-height: 4.5vh;
   text-align: center;
   color: #ffffff;
+  font-feature-settings: "dlig", "liga", "calt";
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
 `;
 
 const Invites = styled.div`
@@ -78,6 +82,8 @@ const Invites = styled.div`
   text-align: center;
   color: #643b6d;
   margin-top: 15px;
+  font-feature-settings: "dlig", "liga", "calt";
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
 `;
 
 const Text = styled.div`
@@ -269,6 +275,8 @@ function getGuests(guest: Guest) {
 }
 
 function Invite({ guest }: Props) {
+  console.log("router", router);
+
   if (!guest) {
     return <></>;
   }
@@ -305,7 +313,9 @@ function Invite({ guest }: Props) {
             <FooterImage></FooterImage>
             <FooterText>
               Confirme sua presença em:{" "}
-              <WebsiteUrl href="www.elisarafael.com">
+              <WebsiteUrl
+                href={`https://www.elisarafael.com?guestId=${guest.id}`}
+              >
                 www.elisarafael.com
               </WebsiteUrl>
             </FooterText>

@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import ConfirmationModal from "../src/components/modals/confirmation";
@@ -58,10 +59,14 @@ const ModalContainer = styled.div.attrs(
 `;
 
 const MainPage: NextPage = () => {
+  const router = useRouter();
+
   const [showModal, setShowModal] = useState(false);
   const [bringToFront, setBringToFront] = useState(false);
   const [height, setHeight] = useState(2000);
   const [currentPosition, setCurrentPosition] = useState(0);
+
+  const [guestId, setGuestID] = useState<string>();
 
   // Confirmation Modal
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
@@ -81,6 +86,13 @@ const MainPage: NextPage = () => {
     setPaymentMethod(paymentMethod);
     setShowGiftModal(!showGiftModal);
   };
+
+  useEffect(() => {
+    if (router?.query?.guestId && !guestId) {
+      console.log("router.query.guestId", router.query.guestId);
+      setGuestID(String(router.query.guestId));
+    }
+  }, [router, guestId]);
 
   useEffect(() => {
     if (showConfirmationModal || showGiftModal) {
@@ -146,6 +158,7 @@ const MainPage: NextPage = () => {
           <ConfirmationModal
             toggleConfirmationModal={toogleConfirmationModal}
             showModal={showConfirmationModal}
+            guestId={guestId}
           ></ConfirmationModal>
           <GiftsModal
             toggleGiftModal={toogleGiftModal}

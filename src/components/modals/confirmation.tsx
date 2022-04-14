@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 import Guest from "../../definitions/guest";
@@ -178,14 +178,22 @@ function getNames(guest: Guest) {
 type Props = {
   toggleConfirmationModal: () => void;
   showModal: boolean;
+  guestId?: string;
 };
 
 function ConfirmationModal(props: Props) {
+  console.log("props", props.guestId);
   const [data, setData] = useState(null);
-  const [guestId, setGuestId] = useState("");
+  const [guestId, setGuestId] = useState<string>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [confirmed, setConfirmed] = useState(false);
+
+  useEffect(() => {
+    if (props.guestId) {
+      setGuestId(props.guestId);
+    }
+  }, [props.guestId]);
 
   const getGuest = async () => {
     setLoading(true);

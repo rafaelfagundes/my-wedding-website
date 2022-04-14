@@ -30,7 +30,7 @@ const HeaderTitle = styled.div`
   font-size: ${isMobile ? 3 : 7}rem;
   line-height: ${isMobile ? 3 : 7}rem;
   color: #ffffff;
-  top: ${isMobile ? 130 : 180}px;
+  top: ${isMobile ? 130 : 150}px;
   position: relative;
   text-align: center;
   max-width: ${isMobile ? "155px" : undefined};
