@@ -41,7 +41,6 @@ type ModalContainerProps = {
   each time the user scrolls the page. The property or properties
   that changes a lot should be placed inside 'style' as shown below. 
 */
-
 const ModalContainer = styled.div.attrs(
   ({ currentPosition, showModal }: ModalContainerProps) => ({
     style: {
@@ -68,6 +67,22 @@ const MainPage: NextPage = () => {
 
   const [guestId, setGuestID] = useState<string>();
 
+  // Show countdown
+  const [showCountdown, setShowCountdown] = useState(false);
+
+  useEffect(() => {
+    /* Why this?
+       Because Next.js is rendering the countdown in the server
+       and when it is rendered in the client, the countdown values
+       are different, leading to errors on hydration.
+    */
+    setTimeout(() => {
+      if (!showCountdown) {
+        setShowCountdown(true);
+      }
+    }, 500);
+  });
+
   // Confirmation Modal
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
@@ -89,7 +104,6 @@ const MainPage: NextPage = () => {
 
   useEffect(() => {
     if (router?.query?.guestId && !guestId) {
-      console.log("router.query.guestId", router.query.guestId);
       setGuestID(String(router.query.guestId));
     }
   }, [router, guestId]);
@@ -146,7 +160,7 @@ const MainPage: NextPage = () => {
           toggleConfirmationModal={toogleConfirmationModal}
           showModal={showConfirmationModal}
         ></Confirmation>
-        <Countdown></Countdown>
+        <Countdown showCountdown={showCountdown}></Countdown>
         <Gifts
           toggleGiftModal={toogleGiftModal}
           showModal={showGiftModal}
