@@ -1,5 +1,7 @@
+import { GetStaticPropsContext } from "next";
 import React from "react";
 import styled from "styled-components";
+import { server } from "../../config";
 import { VSpacer } from "../../src/components/atoms/spacers";
 import Guest from "../../src/definitions/guest";
 
@@ -266,15 +268,10 @@ function getGuests(guest: Guest) {
   }
 }
 
-// function Invite({ guest }: Props) {
-function Invite() {
-  const guest: Guest = {
-    confirmed: true,
-    firstGuest: "Chandler Bing",
-    numberOfGuests: 1,
-    id: "6h7f8l",
-    internalId: "8yhias988hohsf90",
-  };
+function Invite({ guest }: Props) {
+  if (!guest) {
+    return <></>;
+  }
 
   return (
     <Container>
@@ -323,49 +320,55 @@ function Invite() {
   );
 }
 
-// type Params = {
-//   params: {
-//     id: string;
-//   };
-// };
+type Params = {
+  params: {
+    id: string;
+  };
+};
 
-// export async function getStaticPaths() {
-//   const paramIds: Params[] = [];
-//   try {
-//     const url = `${server}/api/confirmation?option=guestids&pwd=conestoga`;
+export async function getStaticPaths() {
+  const paramIds: Params[] = [];
+  try {
+    const url = `${server}/api/confirmation?option=guestids&pwd=conestoga`;
 
-//     const response = await fetch(url);
+    const response = await fetch(url);
 
-//     if (response.status === 200) {
-//       const ids = await response.json();
-//       ids.forEach((i: string) => {
-//         paramIds.push({ params: { id: i } });
-//       });
-//     } else {
-//       paramIds.push({ params: { id: "z4zw5b" } });
-//     }
-//   } catch (error) {
-//     paramIds.push({ params: { id: "z4zw5b" } });
-//   }
+    if (response.status === 200) {
+      const ids = await response.json();
+      ids.forEach((i: string) => {
+        paramIds.push({ params: { id: i } });
+      });
+    } else {
+      paramIds.push({ params: { id: "z4zw5b" } });
+    }
+  } catch (error) {
+    paramIds.push({ params: { id: "z4zw5b" } });
+  }
 
-//   return {
-//     paths: paramIds,
-//     fallback: true,
-//   };
-// }
+  return {
+    paths: paramIds,
+    fallback: true,
+  };
+}
 
-// export async function getStaticProps(context: GetStaticPropsContext) {
-//   const response = await fetch(
-//     `${server}/api/confirmation?id=${context?.params?.id}`
-//   );
+export async function getStaticProps(context: GetStaticPropsContext) {
+  let guest = null;
 
-//   const guest = await response.json();
+  try {
+    const url = `${server}/api/confirmation?id=${context?.params?.id}`;
 
-//   return {
-//     props: {
-//       guest,
-//     },
-//   };
-// }
+    const response = await fetch(url);
+
+    guest = await response.json();
+  } catch (error) {
+    console.log("error", error);
+  }
+
+  return {
+    props: {
+      guest,
+    },
+  };
+}
 
 export default Invite;
