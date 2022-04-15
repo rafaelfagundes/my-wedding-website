@@ -15,7 +15,8 @@ function ThankYou() {
       >
         {[
           "Muito obrigado por nos agraciar com este presente.",
-          "O pagamento está sendo processado e em breve você receberá uma confirmação",
+          "O pagamento está sendo processado.",
+          "Em breve você receberá um aviso em caso de sucesso.",
         ]}
       </OrderStatus>
     </>
