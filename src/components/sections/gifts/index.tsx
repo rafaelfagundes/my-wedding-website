@@ -87,7 +87,7 @@ function Gifts(props: GiftsProps) {
         <WordDivider color="#fff">{props.text.giftsseparator}</WordDivider>
         <VSpacer multiplier={4}></VSpacer>
         <Center>
-          <TextSize size={600}>
+          <TextSize size={700}>
             <Paragraph color="#fff" center>
               {props.text.giftstext}
             </Paragraph>

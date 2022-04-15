@@ -211,5 +211,6 @@ export async function getStaticProps(context: GetStaticPropsContext) {
     props: {
       text,
     },
+    revalidate: 10,
   };
 }
