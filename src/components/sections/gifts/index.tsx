@@ -37,7 +37,7 @@ const GiftsContainer = styled.div`
   display: flex;
   flex-flow: row wrap;
   width: ${isMobile ? 90 : 75}vw;
-  max-width: ${250 * 4 + 4 * 20}px;
+  max-width: ${250 * 4 + 4 * 30}px;
   align-items: center;
   margin-right: -20px;
   justify-content: center;

@@ -1,4 +1,5 @@
 import Airtable from "airtable";
+import _ from "lodash";
 import { NextApiRequest, NextApiResponse } from "next";
 import { Product } from "../../src/definitions/product";
 
@@ -27,11 +28,12 @@ export default async function handler(
           value: Number(p.fields.Value),
           linkMercadoPago: String(p.fields.LinkMercadoPago),
           refCode: String(p.fields.RefCode),
+          type: String(p.fields.Type),
         };
         products.push(product);
       });
 
-      res.json(products);
+      res.json(_.orderBy(products, ["value"]));
     } catch (error) {
       res.status(500).json({ error: error });
     }

@@ -6,6 +6,7 @@ export type Product = {
   image: string;
   linkMercadoPago: string;
   refCode: string;
+  type: string;
 };
 
 export default Product;

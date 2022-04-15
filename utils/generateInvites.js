@@ -33,7 +33,7 @@ const executablePath =
     await page.goto(url, {
       waitUntil: "networkidle0",
     });
-    await page.screenshot({ path: `./screenshots/${ids[id]}.png` });
+    await page.screenshot({ path: `./invites/${ids[id]}.png` });
   }
 
   await browser.close();

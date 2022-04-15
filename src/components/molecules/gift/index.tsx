@@ -2,20 +2,21 @@ import React, { Dispatch, SetStateAction } from "react";
 import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 import Product from "../../../definitions/product";
-import Center from "../../atoms/center";
 import { VSpacer } from "../../atoms/spacers";
 
 const StyledGift = styled.div`
+  overflow: hidden;
   background-color: #fff;
+  min-width: ${isMobile ? "90vw" : "250px"};
   max-width: ${isMobile ? "320px" : "250px"};
   border-radius: 10px;
   margin-bottom: ${isMobile ? 20 : 40}px;
-  min-height: ${isMobile ? undefined : "430px"};
+  /* min-height: ${isMobile ? undefined : "380px"}; */
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px 20px 15px 20px;
-  margin-right: 20px;
+  padding: 0px 0px 0px 0px;
+  margin-right: ${isMobile ? 20 : 30}px;
   filter: drop-shadow(0px 4px 20px rgba(0, 0, 0, 0.1));
 `;
 
@@ -24,9 +25,9 @@ const Picture = styled.div<{ image: string }>`
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  width: ${isMobile ? "90%" : "210px"};
-  /* height: ${isMobile ? 290 * 0.5 : 210 * 0.7142857143}px; */
-  height: ${isMobile ? 250 : 210}px;
+  /* width: ${isMobile ? "90%" : "210px"}; */
+  width: 100%;
+  aspect-ratio: 16 / 12;
 `;
 
 const Divider = styled.div`
@@ -42,6 +43,7 @@ const TitleContainer = styled.div`
   justify-content: center;
   align-items: center;
   /* background-color: yellow; */
+  padding: 0 10px;
 `;
 
 const Title = styled.div`
@@ -74,15 +76,17 @@ const ButtonsContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-  width: ${isMobile ? 290 : 210}px;
+  /* justify-content: space-between; */
+  /* width: ${isMobile ? 290 : 210}px; */
+  width: 100%;
+  background-color: yellow;
 `;
 
 const Button = styled.div<{ color: string }>`
   background-color: ${(props) => props.color};
-  border-radius: 10px;
-  width: ${isMobile ? 140 : 100}px;
-  height: 40px;
+  /* width: ${isMobile ? 140 : 100}px; */
+  width: 50%;
+  height: 50px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -107,6 +111,13 @@ type Props = {
   toggleGiftModal: (paymentMethod: string) => void;
 };
 
+function getImage(image: string) {
+  if (image) {
+    return `https://res.cloudinary.com/rafaelfagundes/image/upload/v1650000070/wedding/gifts/${image}`;
+  }
+  return "";
+}
+
 function Gift(props: Props) {
   const pay = (paymentMethod: string) => {
     props.setProduct(props.product);
@@ -115,13 +126,7 @@ function Gift(props: Props) {
 
   return (
     <StyledGift>
-      <VSpacer multiplier={isMobile ? 1 : 0}></VSpacer>
-      <Picture image={props?.product?.image || ""}></Picture>
-      <VSpacer multiplier={2}></VSpacer>
-      {/* <Center>
-        <Divider></Divider>
-      </Center> */}
-      {/* <VSpacer multiplier={2}></VSpacer> */}
+      <Picture image={getImage(props?.product?.image || "")}></Picture>
       <TitleContainer>
         <Title>{props?.product?.name || ""}</Title>
       </TitleContainer>
@@ -133,16 +138,15 @@ function Gift(props: Props) {
         }).format(props?.product?.value || 0)}
       </Price>
       <VSpacer multiplier={2}></VSpacer>
-      <Center>
-        <ButtonsContainer>
-          <Button color="#6C176C" onClick={() => pay("pix")}>
-            <ButtonText>pix</ButtonText>
-          </Button>
-          <Button color="#29B9B9" onClick={() => pay("cc")}>
-            <ButtonText>cartão</ButtonText>
-          </Button>
-        </ButtonsContainer>
-      </Center>
+
+      <ButtonsContainer>
+        <Button color="#6C176C" onClick={() => pay("pix")}>
+          <ButtonText>pix</ButtonText>
+        </Button>
+        <Button color="#29B9B9" onClick={() => pay("cc")}>
+          <ButtonText>cartão</ButtonText>
+        </Button>
+      </ButtonsContainer>
     </StyledGift>
   );
 }
