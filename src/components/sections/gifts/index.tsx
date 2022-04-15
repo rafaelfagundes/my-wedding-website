@@ -73,55 +73,64 @@ function Gifts(props: GiftsProps) {
     refreshInterval: 10000,
     refreshWhenHidden: false,
     revalidateOnFocus: true,
+    revalidateIfStale: true,
+    revalidateOnMount: true,
+    revalidateOnReconnect: true,
+    refreshWhenOffline: false,
+    errorRetryCount: 10,
+    shouldRetryOnError: true,
   });
 
   if (error) {
     console.error(error);
   }
 
-  return (
-    <StyledGifts>
-      <BackgroundImage image="/images/section.png">
-        <Title color="#fff">{props.text.giftstitle}</Title>
-        <VSpacer multiplier={1}></VSpacer>
-        <WordDivider color="#fff">{props.text.giftsseparator}</WordDivider>
-        <VSpacer multiplier={4}></VSpacer>
+  if (data) {
+    return (
+      <StyledGifts>
+        <BackgroundImage image="/images/section.png">
+          <Title color="#fff">{props.text.giftstitle}</Title>
+          <VSpacer multiplier={1}></VSpacer>
+          <WordDivider color="#fff">{props.text.giftsseparator}</WordDivider>
+          <VSpacer multiplier={4}></VSpacer>
+          <Center>
+            <TextSize size={700}>
+              <Paragraph color="#fff" center>
+                {props.text.giftstext}
+              </Paragraph>
+            </TextSize>
+          </Center>
+          <VSpacer multiplier={isMobile ? 4 : 6}></VSpacer>
+          <Center>
+            <GiftsContainer>
+              {data &&
+                data.map((p: Product) => (
+                  <Gift
+                    key={p.id}
+                    product={p}
+                    setProduct={props.setProduct}
+                    toggleGiftModal={props.toggleGiftModal}
+                  ></Gift>
+                ))}
+            </GiftsContainer>
+          </Center>
+        </BackgroundImage>
+        <VSpacer multiplier={isMobile ? 2 : 4}></VSpacer>
+        <FlowerContainer size={250}>
+          <Flower image="/images/ft-flower.png" size={250}></Flower>
+        </FlowerContainer>
+      </StyledGifts>
+    );
+  } else {
+    return (
+      <>
         <Center>
-          <TextSize size={700}>
-            <Paragraph color="#fff" center>
-              {props.text.giftstext}
-            </Paragraph>
-          </TextSize>
+          <Loading size={50}></Loading>
         </Center>
-        <VSpacer multiplier={isMobile ? 4 : 6}></VSpacer>
-        {!data && (
-          <>
-            <Center>
-              <Loading size={50}></Loading>
-            </Center>
-            <VSpacer multiplier={6}></VSpacer>
-          </>
-        )}
-        <Center>
-          <GiftsContainer>
-            {data &&
-              data.map((p: Product) => (
-                <Gift
-                  key={p.id}
-                  product={p}
-                  setProduct={props.setProduct}
-                  toggleGiftModal={props.toggleGiftModal}
-                ></Gift>
-              ))}
-          </GiftsContainer>
-        </Center>
-      </BackgroundImage>
-      <VSpacer multiplier={isMobile ? 2 : 4}></VSpacer>
-      <FlowerContainer size={250}>
-        <Flower image="/images/ft-flower.png" size={250}></Flower>
-      </FlowerContainer>
-    </StyledGifts>
-  );
+        <VSpacer multiplier={6}></VSpacer>
+      </>
+    );
+  }
 }
 
 export default Gifts;

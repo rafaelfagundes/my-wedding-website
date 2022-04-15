@@ -2,6 +2,7 @@ import React from "react";
 import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 import { Text as TextProps } from "../../../definitions/text";
+import Button from "../../atoms/button";
 import Center from "../../atoms/center";
 import Paragraph from "../../atoms/paragraph";
 import { VSpacer } from "../../atoms/spacers";
@@ -25,27 +26,6 @@ const Rings = styled.div<{ image: string; size: number }>`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-`;
-
-const Button = styled.div`
-  width: 235px;
-  height: 50px;
-  background: #6c176c;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-`;
-
-const ButtonText = styled.div`
-  font-family: "Outfit";
-  font-weight: 300;
-  font-size: 1rem;
-  line-height: 1.2rem;
-  color: #ffffff;
-  text-transform: uppercase;
 `;
 
 type Props = {
@@ -78,7 +58,7 @@ function Confirmation(props: Props) {
       <VSpacer multiplier={isMobile ? 3 : 5}></VSpacer>
       <Center>
         <Button onClick={() => props.toggleConfirmationModal()}>
-          <ButtonText>{props.text.confirmationbutton}</ButtonText>
+          {props.text.confirmationbutton}
         </Button>
       </Center>
     </Background>

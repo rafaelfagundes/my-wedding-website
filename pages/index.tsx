@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import useSWR, { mutate } from "swr";
 import { server } from "../config";
 import ConfirmationModal from "../src/components/modals/confirmation";
 import GiftsModal from "../src/components/modals/gifts";
@@ -14,6 +15,9 @@ import Home from "../src/components/sections/home";
 import Location from "../src/components/sections/location";
 import Product from "../src/definitions/product";
 import { Text as TextProps } from "../src/definitions/text";
+
+const fetcher = (arg: any, ...args: any[]) =>
+  fetch(arg, ...args).then((res) => res.json());
 
 const Main = styled.div``;
 
@@ -64,7 +68,23 @@ type Props = {
 };
 
 const MainPage = (props: Props) => {
+  useEffect(() => {
+    mutate("/api/text", props.text, true);
+  }, [props.text]);
+
   const router = useRouter();
+
+  const { data: text } = useSWR("/api/text", fetcher, {
+    revalidateOnFocus: true,
+    revalidateIfStale: true,
+    revalidateOnMount: true,
+    revalidateOnReconnect: true,
+    refreshInterval: 10000,
+    refreshWhenHidden: false,
+    refreshWhenOffline: false,
+    errorRetryCount: 10,
+    shouldRetryOnError: true,
+  });
 
   const [showModal, setShowModal] = useState(false);
   const [bringToFront, setBringToFront] = useState(false);
@@ -143,55 +163,61 @@ const MainPage = (props: Props) => {
       window.onscroll = null;
     };
   });
-
-  return (
-    <>
-      <Head>
-        <title>{props.text.hero}</title>
-        <meta
-          name="description"
-          content="Website do Casamento da Elisa com o Rafael."
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Main>
-        <BackgroundBlur
-          showModal={showModal}
-          height={height}
-          bringToFront={bringToFront}
-        ></BackgroundBlur>
-        <Home text={props.text}></Home>
-        <Location text={props.text}></Location>
-        <Confirmation
-          toggleConfirmationModal={toogleConfirmationModal}
-          showModal={showConfirmationModal}
-          text={props.text}
-        ></Confirmation>
-        <Countdown showCountdown={showCountdown}></Countdown>
-        <Gifts
-          toggleGiftModal={toogleGiftModal}
-          showModal={showGiftModal}
-          setProduct={setProduct}
-          text={props.text}
-        ></Gifts>
-
-        <Footer text={props.text}></Footer>
-        <ModalContainer currentPosition={currentPosition} showModal={showModal}>
-          <ConfirmationModal
+  if (text) {
+    return (
+      <>
+        <Head>
+          <title>{text.hero}</title>
+          <meta
+            name="description"
+            content="Website do Casamento da Elisa com o Rafael."
+          />
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <Main>
+          <BackgroundBlur
+            showModal={showModal}
+            height={height}
+            bringToFront={bringToFront}
+          ></BackgroundBlur>
+          <Home text={text}></Home>
+          <Location text={text}></Location>
+          <Confirmation
             toggleConfirmationModal={toogleConfirmationModal}
             showModal={showConfirmationModal}
-            guestId={guestId}
-          ></ConfirmationModal>
-          <GiftsModal
+            text={text}
+          ></Confirmation>
+          <Countdown showCountdown={showCountdown}></Countdown>
+          <Gifts
             toggleGiftModal={toogleGiftModal}
             showModal={showGiftModal}
-            product={product}
-            paymentMethod={paymentMethod}
-          ></GiftsModal>
-        </ModalContainer>
-      </Main>
-    </>
-  );
+            setProduct={setProduct}
+            text={text}
+          ></Gifts>
+
+          <Footer text={text}></Footer>
+          <ModalContainer
+            currentPosition={currentPosition}
+            showModal={showModal}
+          >
+            <ConfirmationModal
+              toggleConfirmationModal={toogleConfirmationModal}
+              showModal={showConfirmationModal}
+              guestId={guestId}
+            ></ConfirmationModal>
+            <GiftsModal
+              toggleGiftModal={toogleGiftModal}
+              showModal={showGiftModal}
+              product={product}
+              paymentMethod={paymentMethod}
+            ></GiftsModal>
+          </ModalContainer>
+        </Main>
+      </>
+    );
+  } else {
+    return <></>;
+  }
 };
 
 export default MainPage;

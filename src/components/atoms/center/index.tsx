@@ -6,6 +6,7 @@ const StyledRow = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  width: 100%;
 `;
 
 type Props = {
