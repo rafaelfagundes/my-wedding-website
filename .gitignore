@@ -136,3 +136,6 @@ yarn-error.log*
 /utils/products
 /utils/output.csv
 /utils/*.html
+
+# cookies from mercado pago
+mercadoPagoCookies.js
