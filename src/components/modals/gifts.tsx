@@ -250,9 +250,10 @@ function GiftModal(props: Props) {
             <VSpacer multiplier={isMobile ? 2 : 3}></VSpacer>
             <Center>
               <ActionButton
-                onClick={() =>
-                  navigator.clipboard.writeText(String(qRCode?.payload()))
-                }
+                onClick={() => {
+                  navigator.clipboard.writeText(String(qRCode?.payload()));
+                  alert("Dados do PIX copiados com sucesso!");
+                }}
               >
                 <ButtonText>Copiar Dados do Pix</ButtonText>
               </ActionButton>
