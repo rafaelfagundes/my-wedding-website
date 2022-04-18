@@ -187,6 +187,7 @@ function ConfirmationModal(props: Props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [confirmed, setConfirmed] = useState(false);
+  const [padding, setPadding] = useState(0);
 
   useEffect(() => {
     if (props.guestId) {
@@ -271,12 +272,15 @@ function ConfirmationModal(props: Props) {
                 <GuestIDInput
                   onChange={(e) => setGuestId(e.target.value)}
                   value={guestId}
+                  onFocus={() => setPadding(35)}
+                  onBlur={() => setPadding(0)}
                 ></GuestIDInput>
                 <SearchButton onClick={() => getGuest()}>
                   <SearchButtonText>Buscar</SearchButtonText>
                 </SearchButton>
               </SearchBar>
             </Center>
+            <VSpacer multiplier={padding}></VSpacer>
             {loading && (
               <>
                 <VSpacer multiplier={2.5}></VSpacer>
