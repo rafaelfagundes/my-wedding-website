@@ -97,6 +97,12 @@ async function getIds() {
   return ids;
 }
 
+async function getGuests() {
+  const result = await base("Guests").select({}).all();
+  const guests = result.map((i) => i.fields);
+  return guests;
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -124,6 +130,18 @@ export default async function handler(
       req.query.pwd === "conestoga"
     ) {
       const result = await getIds();
+      if (result) {
+        res.json(result);
+      } else {
+        res.status(404).json({ error: "Guests not found" });
+      }
+    } else if (
+      req.query.option &&
+      req.query.pwd &&
+      req.query.option === "guests" &&
+      req.query.pwd === "conestoga"
+    ) {
+      const result = await getGuests();
       if (result) {
         res.json(result);
       } else {

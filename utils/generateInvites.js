@@ -20,20 +20,20 @@ const executablePath =
     },
   });
   const result = await axios.get(
-    "https://elisarafael.com/api/confirmation?option=guestids&pwd=conestoga"
+    "http://localhost:3000/api/confirmation?option=guests&pwd=conestoga"
   );
 
-  const ids = result.data;
-  console.log("ids", ids);
+  const guests = result.data;
+  console.log("guests", guests);
 
   const page = await browser.newPage();
 
-  for (const id in ids) {
-    const url = `https://www.elisarafael.com/invites/${ids[id]}`;
+  for (const i in guests) {
+    const url = `http://localhost:3000/invites/${guests[i].GuestID}`;
     await page.goto(url, {
       waitUntil: "networkidle0",
     });
-    await page.screenshot({ path: `./invites/${ids[id]}.png` });
+    await page.screenshot({ path: `./invites/${guests[i].Slug}.png` });
   }
 
   await browser.close();
