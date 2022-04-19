@@ -1,6 +1,5 @@
 import Head from "next/head";
 import React from "react";
-import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 import Button from "../atoms/button";
 import Center from "../atoms/center";
@@ -21,7 +20,7 @@ const Background = styled.div<{ image: string }>`
   justify-content: center;
 `;
 
-const Title = styled.div<{ color?: string; size?: number }>`
+const Title = styled.div`
   font-family: "Playfair Display";
   font-style: normal;
   font-weight: 500;
@@ -39,10 +38,9 @@ const Title = styled.div<{ color?: string; size?: number }>`
 
   font-feature-settings: "dlig", "liga", "calt";
   font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
-  /* text-fill-color: transparent; */
 `;
 
-const MobileTitle = styled.div<{ color?: string; size?: number }>`
+const MobileTitle = styled.div`
   font-family: "Playfair Display";
   font-style: normal;
   font-weight: 500;
@@ -60,7 +58,6 @@ const MobileTitle = styled.div<{ color?: string; size?: number }>`
 
   font-feature-settings: "dlig", "liga", "calt";
   font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
-  /* text-fill-color: transparent; */
 `;
 
 type Props = {
@@ -68,11 +65,11 @@ type Props = {
   children: string[];
   buttonText: string;
   buttonAction: React.MouseEventHandler<HTMLDivElement>;
+  isMobile: boolean;
 };
 
 function OrderStatus(props: Props) {
-  console.log(isMobile);
-  return isMobile ? (
+  return props.isMobile ? (
     <>
       <Head>
         <title>{props.title}</title>
@@ -80,7 +77,7 @@ function OrderStatus(props: Props) {
       </Head>
       <Background image="./images/confirmation-flower-vertical.jpg">
         <VSpacer multiplier={6}></VSpacer>
-        <MobileTitle>{props.title}</MobileTitle>
+        <MobileTitle key="mobile">{props.title}</MobileTitle>
         <VSpacer multiplier={3}></VSpacer>
         {props.children.map((p) => (
           <span key={p}>
@@ -103,7 +100,7 @@ function OrderStatus(props: Props) {
       </Head>
       <Background image="./images/confirmation-flower.jpg">
         <VSpacer multiplier={6}></VSpacer>
-        <Title>{props.title}</Title>
+        <Title key="desktop">{props.title}</Title>
         <VSpacer multiplier={3}></VSpacer>
         {props.children.map((p) => (
           <span key={p}>
