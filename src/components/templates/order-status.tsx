@@ -6,7 +6,6 @@ import Button from "../atoms/button";
 import Center from "../atoms/center";
 import Paragraph from "../atoms/paragraph";
 import { VSpacer } from "../atoms/spacers";
-import Title from "../atoms/title";
 
 const Background = styled.div<{ image: string }>`
   padding: 20px;
@@ -22,6 +21,48 @@ const Background = styled.div<{ image: string }>`
   justify-content: center;
 `;
 
+const Title = styled.div<{ color?: string; size?: number }>`
+  font-family: "Playfair Display";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 3rem;
+  line-height: 4.4rem;
+  letter-spacing: -0.035em;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+
+  background: linear-gradient(90.71deg, #e792a6 0.24%, #6c176c 101.15%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  font-feature-settings: "dlig", "liga", "calt";
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
+  /* text-fill-color: transparent; */
+`;
+
+const MobileTitle = styled.div<{ color?: string; size?: number }>`
+  font-family: "Playfair Display";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 3.5rem;
+  letter-spacing: -0.035em;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+
+  background: linear-gradient(90.71deg, #e792a6 0.24%, #6c176c 101.15%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  font-feature-settings: "dlig", "liga", "calt";
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
+  /* text-fill-color: transparent; */
+`;
+
 type Props = {
   title: string;
   children: string[];
@@ -30,20 +71,37 @@ type Props = {
 };
 
 function OrderStatus(props: Props) {
-  return (
+  console.log(isMobile);
+  return isMobile ? (
     <>
       <Head>
         <title>{props.title}</title>
         <meta name="description" content="Obrigado pelo presente" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Background
-        image={
-          isMobile
-            ? "/images/confirmation-flower-vertical.jpg"
-            : "/images/confirmation-flower.jpg"
-        }
-      >
+      <Background image="./images/confirmation-flower-vertical.jpg">
+        <VSpacer multiplier={6}></VSpacer>
+        <MobileTitle>{props.title}</MobileTitle>
+        <VSpacer multiplier={3}></VSpacer>
+        {props.children.map((p) => (
+          <span key={p}>
+            <Center>
+              <Paragraph center>{p}</Paragraph>
+            </Center>
+          </span>
+        ))}
+        <VSpacer multiplier={5}></VSpacer>
+        <Center>
+          <Button onClick={props.buttonAction}>{props.buttonText}</Button>
+        </Center>
+      </Background>
+    </>
+  ) : (
+    <>
+      <Head>
+        <title>{props.title}</title>
+        <meta name="description" content="Obrigado pelo presente" />
+      </Head>
+      <Background image="./images/confirmation-flower.jpg">
         <VSpacer multiplier={6}></VSpacer>
         <Title>{props.title}</Title>
         <VSpacer multiplier={3}></VSpacer>
