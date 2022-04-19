@@ -1,4 +1,5 @@
 import { GetStaticPropsContext } from "next";
+import dynamic from "next/dynamic";
 import React from "react";
 import { isMobile } from "react-device-detect";
 import styled from "styled-components";
@@ -398,4 +399,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   };
 }
 
-export default Invite;
+// export default Invite;
+export default dynamic(() => Promise.resolve(Invite), {
+  ssr: false,
+});
